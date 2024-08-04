@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        gray: '#7F8487'
+        gray: '#7F8487',
+        brown: '#6C4A4A',
+        lightGray: '#D0D4CA'
       }
     },
   },

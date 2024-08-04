@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('@/views/Products/index.vue')
     },
     {
+      path: '/product',
+      name: 'product',
+      component: () => import('@/views/Product/index.vue')
+    },
+    {
       path: '/cart',
       name: 'cart',
       component: () => import('@/views/Cart/index.vue')
@@ -39,11 +44,31 @@ const router = createRouter({
       name: 'logout',
       component: () => import('@/views/Logout/index.vue')
     },
-     {
-      path: '/edit',
-      name: 'edit',
-      component: () => import('@/views/Edit/index.vue')
+    {
+      path: '/personal',
+      name: 'personal',
+      component: () => import('@/views/Personal/index.vue')
     },
+    {
+      path: '/personalEdit',
+      name: 'personalEdit',
+      component: () => import('@/views/personalEdit/index.vue')
+    },
+    {
+      path: '/store',
+      name: 'store',
+      component: () => import('@/views/Store/index.vue')
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('@/views/Search/index.vue')
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: () => import('@/views/Result/index.vue')
+    }
     ]
 })
 

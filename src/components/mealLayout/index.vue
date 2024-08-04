@@ -1,44 +1,70 @@
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/store/user';
+import { computed } from 'vue';
 
+const userStore = useUserStore()
+const isDarkTheme = computed(() => userStore.isDarkTheme)
 
 const footerImage = ref([
   {
-    image: 'https://cdn-icons-png.flaticon.com/128/15665/15665402.png',
+    key:'/',
+    image: 'fa-house',
     title: '首頁'
   },
   {
-    image: 'https://cdn-icons-png.flaticon.com/128/9219/9219671.png',
+    key:'/cart',
+    image: 'fa-cart-shopping',
     title: '購物車'
   },
   {
-    image: 'https://cdn-icons-png.flaticon.com/128/17108/17108990.png',
+    key:'/store',
+    image: 'fa-store',
     title: '店家資訊'
   },
   {
-    image: 'https://cdn-icons-png.flaticon.com/128/2354/2354573.png',
+    key:'/login',
+    image: 'fa-user',
     title: '我的'
   }
 ])
+
+const router = useRouter()
+
+const changePage = (url) => {
+  router.push(url)
+}
 
 </script>
 
 <template>
   <div class="flex flex-col min-h-screen">
-    <nav class="h-14">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVAtBaCVj78JLQzp7ii3ny1SYbOZzA-EGFVw&s" alt=" " class="h-14 ml-40 mt-2">
-    </nav>
-  <div class="flex-1">
+    <header v-if="isDarkTheme" class="py-5 text-center fixed w-full top-0 z-10 bg-black">
+      <img src="https://www.beclass.com/share/202404/284d8186613e2989e1bf0846r.png" alt=" " class="h-14 inline-block">
+    </header>
+    <header v-else class="py-5 text-center fixed w-full top-0 z-10 bg-white">
+      <img src="https://www.beclass.com/share/202404/284d8186613e2989e1bf0846r.png" alt=" " class="h-14 inline-block">
+    </header>
+  <div class="flex-1 pt-24 pb-16">
     <slot />
   </div>
 
-  <footer>
-    <div class="flex w-full justify-around">
-      <div v-for="item in footerImage" :key="item" class="mx-3 text-center">
-      <img :src="item.image" alt="image" class="w-10 h-10"><span class="text-sm">{{item.title}}</span>
-      </div>
-    </div>
-
+  <footer v-if="isDarkTheme" class="fixed bottom-0 w-full bg-black text-white py-2">
+    <ul class="flex w-full justify-center">
+      <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-7 cursor-pointer" @click="changePage(item.key)">
+      <i :class="['fa-solid text-2xl', item.image] "></i>
+      <span class="text-sm">{{item.title}}</span>
+      </li>
+    </ul>
+  </footer>
+  <footer v-else class="fixed bottom-0 w-full bg-white py-2">
+    <ul class="flex w-full justify-center">
+      <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-7 cursor-pointer" @click="changePage(item.key)">
+      <i :class="['fa-solid text-2xl', item.image] "></i>
+      <span class="text-sm">{{item.title}}</span>
+      </li>
+    </ul>
   </footer>
   </div>
 

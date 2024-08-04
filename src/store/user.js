@@ -5,13 +5,25 @@ export const useUserStore = defineStore(
   'user',
   () => {
     const token = ref('')
+    const isDarkTheme = ref(false)
+    const formData = ref('')
     const setToken = (newToken) => {
       token.value = newToken
+    }
+    const setIsDarkTheme = (bool) => {
+      isDarkTheme.value = bool
+    }
+    const setFormData = (newFormData) => {
+      formData.value = newFormData
     }
 
     return {
       token,
-      setToken
+      isDarkTheme,
+      formData,
+      setToken,
+      setIsDarkTheme,
+      setFormData
     }
   },
   {
