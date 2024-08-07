@@ -23,18 +23,21 @@ const submit = () => {
   useStore.setFormData(newToEdit)
   goPersonal()
 }
+const prePage = () => {
+  router.push('/personal')
+}
 </script>
 
 <template>
 <header>
     <div class="flex mt-3 mx-2">
-      <i class="fa-solid fa-chevron-left"></i>
+      <i class="fa-solid fa-chevron-left cursor-pointer" @click="prePage"></i>
       <p class="w-full text-center">編輯個人檔案</p>
     </div>
   </header>
   <div class="flex items-center mt-2 px-5">
     <div class=" mt-3 w-full">
-    <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-16 rounded-full mx-auto">
+    <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-16 h-16 rounded-full mx-auto">
     </div>
   </div>
   <form action="" class=" text-center mt-5">

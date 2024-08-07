@@ -25,17 +25,17 @@ const goToEdit = () => {
 
 <template>
   <header v-if="isDarkTheme" class="text-white">
-    <div class="flex mt-3 mx-2 text-white">
+    <div class="flex mx-2 text-white">
       <p><i class="fa-solid fa-chevron-left"></i></p><p class="w-full text-center">帳戶設置</p>
     </div>
   </header>
   <header v-else>
-    <div class="flex mt-3 mx-2">
+    <div class="flex mx-2">
       <p><i class="fa-solid fa-chevron-left"></i></p><p class="w-full text-center">帳戶設置</p>
     </div>
   </header>
-  <div v-if="isDarkTheme" class="flex px-5 w-full items-center fixed bg-black text-white">
-  <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-14 rounded-full">
+  <div v-if="isDarkTheme" class="flex px-5 w-full items-center bg-black text-white">
+  <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-14 h-14 rounded-full">
   <div class="ml-3 mt-2 w-full">
     <span>{{ formData.name }}</span><br>
     <small>帳號名:{{ formData.user }}</small>
@@ -45,7 +45,7 @@ const goToEdit = () => {
   </div>
 </div>
   <div v-else class="flex px-5 w-full items-center fixed bg-white">
-  <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-14 rounded-full">
+  <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-14 h-14 rounded-full">
   <div class="ml-3 mt-2 w-full">
     <span>{{ formData.name }}</span><br>
     <small>帳號名:{{ formData.user }}</small>

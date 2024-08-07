@@ -4,14 +4,22 @@ import homeCard from '@/components/homeCard/index.vue';
 import { useUserStore } from '@/store/user';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useProductStore } from '@/store/product';
 
 const router = useRouter()
 const goProducts = () => {
   router.push('/products')
 }
+const changePage = (url) => {
+  router.push(url)
+}
 
 const userStore = useUserStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
+
+const productStore = useProductStore()
+const products = ref(productStore.products || [])
+console.log(products)
 
 const carouseImage = reactive([
   'https://kaoku.tw/shinemood/source/KITKAT%E8%81%AF%E5%90%8D-FB_%E5%B7%A5%E4%BD%9C%E5%8D%80%E5%9F%9F%2010727.jpg',
@@ -40,34 +48,14 @@ const menuImage = reactive([
     title: '曾點過'
   }
 ])
-const storeList = ref([
-  {
-    name:'台北西湖店',
-    time:'10:30~19:00',
-    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s',
-
-  },
-  {
-    name:'台北師大店',
-    time:'8:30~19:00',
-    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s',
-
-  },
-  {
-    name:'台北內湖店',
-    time:'8:30~19:00',
-    image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s',
-
-  }
-])
 </script>
 
 <template>
-<div v-if="isDarkTheme" class="text-center px-8 fixed top-28 z-10 w-full bg-black text-black">
+<div v-if="isDarkTheme" class="text-center px-8 fixed  z-10 w-full bg-black text-black">
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品">
 </div>
-<div v-else class="text-center px-8 fixed top-28 z-10 w-full bg-white">
+<div v-else class="text-center px-8 fixed z-10 w-full bg-white">
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品">
 </div>
@@ -88,13 +76,16 @@ const storeList = ref([
     <p>{{ items.title }}</p>
     </div>
   </div>
+
+<template  v-for="(item,id) in products" :key="id">
   <home-card
-  v-for="item in storeList"
-  :key="item.name"
+  v-if="id < 3"
   :name="item.name"
-  :time="item.time"
-  :image="item.image"
-  @click="goProducts"
+  :time="item.business_hours"
+  image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s"
+  @go-products="changePage(`/store/${item.id}`)"
   />
+  </template>
+
 </template>
 <style scope></style>

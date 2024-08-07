@@ -5,7 +5,7 @@ import { useUserStore } from '@/store/user';
 const payMethod = ['貨到付款','線上支付']
 const getMethod = ['自取','外送']
 const userStore = useUserStore()
-const getInform = userStore.formData
+const buyerInform = userStore.formData
 const router = useRouter()
 const edit = () => {
   router.push('/personalEdit')
@@ -13,6 +13,7 @@ const edit = () => {
 const result = () => {
   router.push('/result')
 }
+
 
 </script>
 
@@ -27,16 +28,24 @@ const result = () => {
       <div class="text-right" @click="edit">
         <i class="fa-solid fa-pen-to-square"></i>
       </div>
-      <p v-for="items in getInform" :key="items" class="font-bold">
-        {{ items }}
-      </p>
+      <div class="font-bold pl-3">
+        <p>
+        姓名： {{buyerInform.name}}
+        </p>
+        <p>
+        帳號： {{buyerInform.user}}
+        </p>
+        <p>
+        電話： {{buyerInform.phone}}
+        </p>
+      </div>
   </div>
 <div class="bg-white">
-  <div class="flex mt-3 items-center my-3 py-3 rounded-lg mx-2">
-    <img src="https://tb-static.uber.com/prod/image-proc/processed_images/8fc5590df20b5b5099d1db2301ab3488/7f4ae9ca0446cbc23e71d8d395a98428.jpeg" alt="image" class="h-24">
+  <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2">
+    <img src="https://tb-static.uber.com/prod/image-proc/processed_images/8fc5590df20b5b5099d1db2301ab3488/7f4ae9ca0446cbc23e71d8d395a98428.jpeg" alt="image" class="h-20">
     <div>
       <p class="font-bold text-xl">莊園鮮奶茶</p>
-      <p class="font-bold text-2xl">$ 60</p>
+      <p class="font-bold text-xl">$ 60</p>
     </div>
     <div class=" translate-y-6 translate-x-12">
     <button class="rounded-l-md w-6 text-white  bg-brown">-</button>
@@ -44,11 +53,11 @@ const result = () => {
     <button class="rounded-r-md w-6 text-white  bg-brown">+</button>
     </div>
   </div>
-  <div class="flex items-center my-3 py-3 rounded-lg mx-2">
-    <img src="https://tb-static.uber.com/prod/image-proc/processed_images/8fc5590df20b5b5099d1db2301ab3488/7f4ae9ca0446cbc23e71d8d395a98428.jpeg" alt="image" class="h-24">
+  <div class="flex items-center my-3 py-2 rounded-lg bg-white mx-2">
+    <img src="https://tb-static.uber.com/prod/image-proc/processed_images/8fc5590df20b5b5099d1db2301ab3488/7f4ae9ca0446cbc23e71d8d395a98428.jpeg" alt="image" class="h-20">
     <div>
       <p class="font-bold text-xl">莊園鮮奶茶</p>
-      <p class="font-bold text-2xl">$ 60</p>
+      <p class="font-bold text-xl">$ 60</p>
     </div>
     <div class=" translate-y-6 translate-x-12">
     <button class="rounded-l-md w-6 text-white  bg-brown">-</button>
@@ -56,11 +65,11 @@ const result = () => {
     <button class="rounded-r-md w-6 text-white  bg-brown">+</button>
     </div>
   </div>
-  <div class="flex items-center my-3 py-3 rounded-lg mx-2">
-    <img src="https://tb-static.uber.com/prod/image-proc/processed_images/8fc5590df20b5b5099d1db2301ab3488/7f4ae9ca0446cbc23e71d8d395a98428.jpeg" alt="image" class="h-24">
+  <div class="flex items-center my-3 py-2 rounded-lg bg-white mx-2">
+    <img src="https://tb-static.uber.com/prod/image-proc/processed_images/8fc5590df20b5b5099d1db2301ab3488/7f4ae9ca0446cbc23e71d8d395a98428.jpeg" alt="image" class="h-20">
     <div>
       <p class="font-bold text-xl">莊園鮮奶茶</p>
-      <p class="font-bold text-2xl">$ 60</p>
+      <p class="font-bold text-xl">$ 60</p>
     </div>
     <div class=" translate-y-6 translate-x-12">
     <button class="rounded-l-md w-6 text-white  bg-brown">-</button>

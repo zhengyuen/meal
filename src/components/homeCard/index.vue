@@ -17,12 +17,15 @@ defineProps({
   }
 }
 )
-
+const emit = defineEmits(['goProducts'])
+const goProduct = () => {
+  emit('goProducts')
+}
 </script>
 
 <template>
   <div>
-    <div class="px-6">
+    <div class="px-6" @click="goProduct">
       <div class="w-full bg-black h-48 rounded-lg">
       <img :src="image" alt="image" class="w-full object-cover h-48 rounded-lg">
       </div>
