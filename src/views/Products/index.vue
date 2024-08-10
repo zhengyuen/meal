@@ -14,9 +14,12 @@ const changePage = (url) => {
 }
 const storeId = ref(Number(route.params.id))
 const productStore = useProductStore()
-const products = ref(productStore.products || [])
-const product = computed(() => products.value.find(product => product.id === storeId.value))
-const productData = computed(() => product.value.products)
+const stores = ref(productStore.stores || [])
+const store = computed(() => stores.value.find(store => store.id === storeId.value))
+const productData = computed(() => store.value.products)
+console.log(productData)
+console.log(storeId.value)
+
 </script>
 
 <template>
@@ -24,7 +27,7 @@ const productData = computed(() => product.value.products)
   <div class="pl-2"><i class="fa-solid fa-chevron-left" @click="changePage('/store')"></i></div>
   <div class="flex px-5 items-center shadow-sm">
       <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-24 object-cover relative">
-  <template v-for="(items, idx) in products" :key="idx">
+  <template v-for="(items, idx) in stores" :key="idx">
     <div class="ml-4" v-if="idx === storeId-1">
       <p  class="font-bold">{{ items.name }}</p>
       <small class="font-bold">小木屋鬆餅</small><br>
@@ -37,8 +40,8 @@ const productData = computed(() => product.value.products)
   <div class="fixed right-0 translate-y-2 z-10 bg-white w-10 text-center">
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
-  <a-tabs v-model:activeKey="activeKey" type="card" class="" >
-    <a-tab-pane key="1" tab="小木屋家推薦">
+  <a-tabs v-model:activeKey="activeKey" type="card" class="static" >
+    <a-tab-pane key="1" tab="小木屋家推薦" class="">
       <h1 class="font-bold text-brown" >小木屋家推薦</h1>
       <template v-for="(item, id) in productData" :key="id">
     <product-card v-if="item.category === '小木屋家推薦'"
@@ -117,7 +120,7 @@ const productData = computed(() => product.value.products)
       />
   </template>
     </a-tab-pane>
-    <a-tab-pane key="7" tab="找甜的">
+    <a-tab-pane key="8" tab="找甜的">
       <h1 class="font-bold text-brown">找甜的</h1>
         <template v-for="(item, id) in productData" :key="id">
       <product-card v-if="item.category === '找甜的'"

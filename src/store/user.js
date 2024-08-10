@@ -16,14 +16,20 @@ export const useUserStore = defineStore(
     const setFormData = (newFormData) => {
       formData.value = newFormData
     }
+    const personal = ref('')
+    const setPersonal = (newPersonal) => {
+      personal.value = newPersonal
+    }
 
     return {
       token,
       isDarkTheme,
       formData,
+      personal,
       setToken,
       setIsDarkTheme,
-      setFormData
+      setFormData,
+      setPersonal
     }
   },
   {

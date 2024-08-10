@@ -2,21 +2,27 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useProductStore = defineStore(
-  'product',
+  'store',
   () => {
-    const products = ref([])
-    const setProducts = (newProducts) => {
-      products.value = newProducts
+    const stores = ref([])
+    const setStores = (newStores) => {
+      stores.value = newStores
     }
     const cart = ref([])
     const setCart = (newCart) => {
       cart.value = newCart
     }
+    const order = ref([])
+    const setOrder = (newOrder) => {
+      order.value = newOrder
+    }
     return {
-      products,
+      stores,
       cart,
-      setProducts,
-      setCart
+      order,
+      setStores,
+      setCart,
+      setOrder
     }
   },
   {

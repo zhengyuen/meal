@@ -13,13 +13,18 @@ const goProducts = () => {
 const changePage = (url) => {
   router.push(url)
 }
+const searchValue = ref('')
+const handleSearch = (event) => {
+  if (event.keyCode === 13) {
+    changePage(`/search?keyword=${searchValue.value}`)
+  }
+}
 
 const userStore = useUserStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
 
 const productStore = useProductStore()
-const products = ref(productStore.products || [])
-console.log(products)
+const stores = ref(productStore.stores || [])
 
 const carouseImage = reactive([
   'https://kaoku.tw/shinemood/source/KITKAT%E8%81%AF%E5%90%8D-FB_%E5%B7%A5%E4%BD%9C%E5%8D%80%E5%9F%9F%2010727.jpg',
@@ -52,12 +57,12 @@ const menuImage = reactive([
 
 <template>
 <div v-if="isDarkTheme" class="text-center px-8 fixed  z-10 w-full bg-black text-black">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品">
+  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" ></i>
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-16" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
 <div v-else class="text-center px-8 fixed z-10 w-full bg-white">
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品">
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
   <a-carousel class="w-full mt-6" autoplay>
     <div v-for="(item, idx) in carouseImage" :key="idx">
@@ -77,7 +82,7 @@ const menuImage = reactive([
     </div>
   </div>
 
-<template  v-for="(item,id) in products" :key="id">
+<template  v-for="(item,id) in stores" :key="id">
   <home-card
   v-if="id < 3"
   :name="item.name"

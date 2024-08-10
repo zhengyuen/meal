@@ -13,7 +13,7 @@ const productStore = useProductStore()
 const getProductData = async() => {
 	const { code, data } = await productApi.getProducts();
 	if (code === 200){
-    productStore.setProducts(data);
+    productStore.setStores(data);
 	}
 }
 onMounted(() => {

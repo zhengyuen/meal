@@ -3,9 +3,20 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { computed } from 'vue';
+import { useProductStore } from '@/store/product';
+import { ClockCircleOutlined } from '@ant-design/icons-vue';
+
 
 const userStore = useUserStore()
+const productStore = useProductStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
+const cartAmount = computed(() => {
+  let amount = 0
+  for (const item of productStore.cart ) {
+    amount += item.quantity
+  }
+  return amount
+})
 
 const footerImage = ref([
   {
@@ -53,7 +64,7 @@ const changePage = (url) => {
   <footer v-if="isDarkTheme" class="fixed bottom-0 w-full bg-black text-white py-2">
     <ul class="flex w-full justify-center">
       <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-7 cursor-pointer" @click="changePage(item.key)">
-      <i :class="['fa-solid text-2xl', item.image] "></i>
+          <i :class="['fa-solid text-2xl', item.image] "></i>
       <span class="text-sm">{{item.title}}</span>
       </li>
     </ul>
@@ -61,7 +72,10 @@ const changePage = (url) => {
   <footer v-else class="fixed bottom-0 w-full bg-white py-2">
     <ul class="flex w-full justify-center">
       <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-7 cursor-pointer" @click="changePage(item.key)">
+        <a-badge v-if="item.image ==='fa-cart-shopping'" :count="cartAmount" size="large">
       <i :class="['fa-solid text-2xl', item.image] "></i>
+      </a-badge>
+      <i v-else :class="['fa-solid text-2xl', item.image] "></i>
       <span class="text-sm">{{item.title}}</span>
       </li>
     </ul>
