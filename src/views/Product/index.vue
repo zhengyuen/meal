@@ -39,9 +39,9 @@ const addCart = () => {
     const newCart = productStore.cart.map(product => {
       if (product.id === productId.value){
         product.quantity += amount.value
-        return products
+        return product
       }
-      return products
+      return product
     })
     console.log(newCart)
     productStore.setCart(newCart)

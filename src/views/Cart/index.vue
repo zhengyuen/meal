@@ -43,6 +43,7 @@ const adjustQuantity = (id, num) => {
     const newCart = productStore.cart.filter(product => id !== product.id)
       productStore.setCart(newCart)
       cart.value = newCart
+      console.log(newCart)
   }
 </script>
 
