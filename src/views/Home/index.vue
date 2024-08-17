@@ -7,9 +7,7 @@ import { useRouter } from 'vue-router';
 import { useProductStore } from '@/store/product';
 
 const router = useRouter()
-const goProducts = () => {
-  router.push('/products')
-}
+
 const changePage = (url) => {
   router.push(url)
 }
@@ -25,6 +23,10 @@ const isDarkTheme = computed(() => userStore.isDarkTheme)
 
 const productStore = useProductStore()
 const stores = ref(productStore.stores || [])
+const store = computed(() => {
+  stores.value = productStore.stores.filter(store => store.value.products)
+})
+console.log(store);
 
 const carouseImage = reactive([
   'https://kaoku.tw/shinemood/source/KITKAT%E8%81%AF%E5%90%8D-FB_%E5%B7%A5%E4%BD%9C%E5%8D%80%E5%9F%9F%2010727.jpg',
@@ -58,7 +60,7 @@ const menuImage = reactive([
 <template>
 <div v-if="isDarkTheme" class="text-center px-8 fixed  z-10 w-full bg-black text-black">
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" ></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-16" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
 <div v-else class="text-center px-8 fixed z-10 w-full bg-white">
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
@@ -88,7 +90,7 @@ const menuImage = reactive([
   :name="item.name"
   :time="item.business_hours"
   image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s"
-  @go-products="changePage(`/store/${item.id}`)"
+  @go-products="changePage(`/store/${item.id}/products`)"
   />
   </template>
 

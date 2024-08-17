@@ -17,6 +17,9 @@ const router = useRouter()
 const goToHome = () => {
   router.push('/')
 }
+const changePage = (url) => {
+  router.push(url)
+}
 const goToLogout = () => {
   router.push('/logout')
 }
@@ -47,7 +50,7 @@ onMounted (()=> {
   <mealLayout>
   <header>
     <div class="flex mt-3 justify-between mx-2">
-      <i class="fa-solid fa-chevron-left"></i>
+      <i class="fa-solid fa-chevron-left" @click="changePage('/')"></i>
       <p>幫助</p>
     </div>
   </header>

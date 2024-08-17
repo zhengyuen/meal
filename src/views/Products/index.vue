@@ -17,8 +17,6 @@ const productStore = useProductStore()
 const stores = ref(productStore.stores || [])
 const store = computed(() => stores.value.find(store => store.id === storeId.value))
 const productData = computed(() => store.value.products)
-console.log(productData)
-console.log(storeId.value)
 
 </script>
 

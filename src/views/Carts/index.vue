@@ -5,12 +5,13 @@ import { useProductStore } from '@/store/product';
 
 const productStore = useProductStore()
 const cart = computed(() => productStore.cart || [])
-// const newCart = computed(() => productStore.cart.filter(store => store.storeId === 2 ))
+// const store = computed(() =>{
 
 const router = useRouter()
 const order = () => {
   router.push('/order')
 }
+
 
 const changePage = (url) => {
   router.push(url)
@@ -53,23 +54,9 @@ const adjustQuantity = (id, num) => {
   </header>
   <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200">
-      <p class="text-2xl">購物車</p>
   <p>全部 {{ cart.length }} 筆</p>
-  <div class="flex items-center shadow-md my-3 py-2 rounded-lg bg-white mx-2" v-for="(item) in cart" :key="item" >
-    <!-- <template > -->
-      <!-- <div v-if="item.storeId === 1" > -->
-        <!-- <div v-if="id < 2" class="flex items-center mx-auto py-5">
-          <img src="https://tb-static.uber.com/prod/image-proc/processed_images/660e70c0b191d7c39a2d1f155712e03d/c4114ef7f0cc2f8ee04dbb216969493e.jpeg" alt="" class="w-20 h-20 object-cover mx-6 rounded-full mb-3">
-          <div class="mx-2 my-3">
-          <h1 class="text-lg font-bold">小木屋鬆餅</h1>
-          <p>{{ item.storeName }}</p>
-          <p>{{ item.id }} 項 · $ {{ item.price }}</p>
-        </div>
-          <div class="text-center w-1/4 ml-5" @click="changePage('/carts')">
-            <button class="text-white bg-brown w-full rounded-lg h-10">檢視購物車</button>
-          </div>
-        </div> -->
-        <!-- <h1>{{ item.storeName }}</h1> -->
+  <div class="flex items-center shadow-md my-3 py-2 rounded-lg bg-white mx-2"  v-for="(item, id) in cart" :key="id">
+    <template v-if="item.storeId === 1">
         <img :src="item.image" alt="image" class="h-20 relative">
         <div>
           <P>{{ item.storeId }}</P>
@@ -86,9 +73,8 @@ const adjustQuantity = (id, num) => {
         <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item.id)">
           <i class="fa-regular fa-trash-can  text-sm"></i>
         </div>
-      <!-- </div> -->
-    <!-- </template> -->
-
+        </template>
+      </div>
     <!-- <template v-else>
       <img :src="item.image" alt="image" class="h-20 relative">
       <div>
@@ -108,17 +94,16 @@ const adjustQuantity = (id, num) => {
       <i class="fa-regular fa-trash-can  text-sm"></i>
       </div>
     </template> -->
-  </div>
-
-
-  <div class="flex items-center shadow-md my-3 py-2 justify-between px-7 mx-2 rounded-lg bg-white">
-      <p class="text-lg font-bold">合計：$ {{ totalPrice }}</p>
-      <div class="bg-brown text-white rounded-lg text-center w-1/4 text-md h-10 ">
-      <button @click="order" class="pt-2 ">去買單</button>
+    <div class="flex items-center shadow-md my-3 py-2 justify-between px-7 mx-2 rounded-lg bg-white">
+        <p class="text-lg font-bold">合計：$ {{ totalPrice }}</p>
+        <div class="bg-brown text-white rounded-lg text-center w-1/4 text-md h-10 ">
+        <button @click="order" class="pt-2 ">去買單</button>
+      </div>
     </div>
   </div>
+
+
   </div>
-</div>
 </template>
 
 <style scope></style>

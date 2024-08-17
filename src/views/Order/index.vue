@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, reactive } from 'vue';
+import { computed, ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useProductStore } from '@/store/product';
@@ -13,8 +13,19 @@ const buyerInform = computed(() => userStore.formData)
 const productStore = useProductStore()
 const cart = computed(() => productStore.cart)
 const orders = computed(() => productStore.order)
-const storeId = ref(cart.value[0].storeId)
+const storeId = computed(() => productStore.cart[0].storeId)
+const token = computed(() => productStore.token)
+  // let storeIdVal = []
+// for(const item of productStore.cart){
+//   storeIdVal = item.storeId
+
+//   console.log(storeIdVal)
+//   }
+// }
+// )
 const store = computed(() => productStore.stores.find(store => store.id === storeId.value))
+// console.log(cart.value[0].storeId)
+console.log(storeId)
 
 const totalPrice = computed(() => {
   let price = 0
@@ -24,7 +35,6 @@ const totalPrice = computed(() => {
   return price
 })
 
-console.log(storeId)
 const router = useRouter()
 const edit = () => {
   router.push('/personal')
@@ -38,15 +48,32 @@ const order = reactive({
   getMethod: '自取',
 })
 const addOrder = () => {
-  productStore.setOrder({
-    ...productStore.order,
+  // 相同店家
+  if(storeId === cart.value.storeId){
+    productStore.setOrder(
+      ...productStore.order.products,{...cart.value}
+    )
+  }else{
+  productStore.setOrder([
+    ...productStore.order,{
   payMethod: order.payMethod,
   getMethod: order.getMethod,
-  totalPrice: totalPrice
-  })
+  totalPrice: totalPrice,
+  store: store.value.name,
+  storeId: store.value.id,
+  products: cart.value}
+  ])
+  }
   changePage('/result')
   message.success('您已成功下單')
 }
+
+// onMounted (()=> {
+// 	if (!token.value) {
+// 		changePage('/login')
+//     message.success('請登入會員')
+// 	}
+// })
 </script>
 
 <template>
@@ -54,7 +81,7 @@ const addOrder = () => {
     <div class="flex-1 bg-slate-200">
       <header class="text-center bg-white fixed w-full ">
         <i class="fa-solid fa-chevron-left left-3 absolute" @click="changePage('/cart')"></i>
-        頂單詳情</header>
+        訂單詳情</header>
     <div class="shadow-md my-3 py-3 px-5 mt-8 rounded-lg bg-white text-blue-500 text-bold">
       <p class="font-bold text-lg pb-2">{{ store.name }}</p>
       <i class="fa-solid fa-phone mr-3"></i><span>07-722-6777</span>
@@ -80,6 +107,8 @@ const addOrder = () => {
     <div>
       <p class="font-bold text-xl">{{ item.name }}</p>
       <p class="font-bold text-xl">$ {{ item.price }}</p>
+      <span class="text-slate-400">{{ item.temperature }}</span>
+      <span class="ml-2 text-slate-400">{{ item.sweetness }}</span>
     </div>
     <div class=" translate-y-6 translate-x-12">
       <p>x {{ item.quantity }}</p>
@@ -108,7 +137,7 @@ const addOrder = () => {
 
   <div class="flex justify-between items-center shadow-md my-3 py-3 px-3 rounded-lg bg-white">
       <p class="font-bold text-lg pb-2">總計 $ {{ totalPrice }}</p>
-      <div class="font-bold bg-brown text-white w-1/5 text-center rounded-lg text-md" @click="addOrder">
+      <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md" @click="addOrder">
         <button class="h-10">提交訂單</button>
       </div>
   </div>

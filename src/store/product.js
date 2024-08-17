@@ -12,6 +12,10 @@ export const useProductStore = defineStore(
     const setCart = (newCart) => {
       cart.value = newCart
     }
+    const storeCart = ref([])
+    const setStoreCart = (newStoreCard) => {
+      storeCart.value = newStoreCard
+    }
     const order = ref([])
     const setOrder = (newOrder) => {
       order.value = newOrder
@@ -20,9 +24,11 @@ export const useProductStore = defineStore(
       stores,
       cart,
       order,
+      storeCart,
       setStores,
       setCart,
-      setOrder
+      setOrder,
+      setStoreCart
     }
   },
   {

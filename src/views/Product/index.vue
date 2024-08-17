@@ -10,16 +10,17 @@ const router = useRouter()
 const route = useRoute()
 const productStore = useProductStore()
 const productId = ref(Number((route.params.id)))
-const stores = computed(() => productStore.stores.find(store => store.id === productId.value))
 const storeId = ref(Number(route.params.storeId))
+const stores = computed(() => productStore.stores.find(store => store.id === storeId.value))
 
 const products = computed(() => stores.value.products.find(product => product.id === productId.value))
+console.log(products.value);
 
-console.log(productId)
+
 
 const cart = ref(productStore.cart || [])
 const goProduct = () => {
-  router.push(`/store/${storeId.value}`)
+  router.push(`/store/${storeId.value}/products`)
 }
 
 const amount = ref(1);
@@ -31,35 +32,52 @@ const amount = ref(1);
       amount.value -= 1
     }
   }
-
 const addCart = () => {
 // 有東西
   const hasProduct = productStore.cart.some(product => product.id === productId.value)
   if(hasProduct){
     const newCart = productStore.cart.map(product => {
-      if (product.id === productId.value){
+      if (product.id === productId.value && product.storeId === storeId.value){
         product.quantity += amount.value
+        product.temperature = drinkStatus.temperature
+        product.sweetness = drinkStatus.sweetness
         return product
+      }if(product.storeId !== storeId.value){
+        message.success('請選擇同一店家商品')
+        console.log(products)
+        productStore.setCart([...productStore.cart, {
+      ...products.value,
+      quantity: amount.value,
+      storeId,
+      storeName: stores.value.name,
+      temperature: drinkStatus.temperature,
+      sweetness: drinkStatus.sweetness
+    }])
       }
       return product
     })
-    console.log(newCart)
     productStore.setCart(newCart)
-  }else{ //沒東西
-    productStore.setCart([...productStore.cart, {... products.value, quantity: amount.value, storeId
+  } else { // 沒東西
+    productStore.setCart([...productStore.cart, {
+      ...products.value,
+      quantity: amount.value,
+      storeId,
+      storeName: stores.value.name,
+      temperature: drinkStatus.temperature,
+      sweetness: drinkStatus.sweetness
     }])
-    return products
   }
-  productStore.setOrder({
-    temperature: drinkStatus.temperature,
-    sweetness: drinkStatus.sweetness
-  })
-  router.push(`/store/${storeId.value}`)
+  // router.push(`/store/${storeId.value}/products`)
   message.success('已加入購物車')
-}
+  }
 
-// const add = () => {
+const storeCart = [productStore.cart.filter(product => product.storeId === storeId.value)]
 
+const newStoreCart =[
+  ...productStore.storeCart,
+  ...storeCart
+  ]
+  productStore.setStoreCart(newStoreCart)
 
 const drinkStatus = reactive({
   temperature: '正常冰',
@@ -68,7 +86,6 @@ const drinkStatus = reactive({
 const temperature = ['正常冰','少冰','去冰','常溫','溫','熱']
 const sweetness = ['正常糖','七分糖','半糖','三分糖','無糖']
 
-console.log(drinkStatus.sweetness)
 </script>
 
 <template>

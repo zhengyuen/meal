@@ -10,7 +10,7 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/store/:id',
+      path: '/store/:id/products',
       name: 'products',
       component: () => import('@/views/Products/index.vue')
     },
@@ -25,9 +25,24 @@ const router = createRouter({
       component: () => import('@/views/Cart/index.vue')
     },
     {
+      path: '/carts',
+      name: 'carts',
+      component: () => import('@/views/Carts/index.vue')
+    },
+    {
       path: '/order',
       name: 'order',
       component: () => import('@/views/Order/index.vue')
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: () => import('@/views/Orders/index.vue')
+    },
+    {
+      path: '/orderMenu',
+      name: 'orderMenu',
+      component: () => import('@/views/OrderMenu/index.vue')
     },
     {
       path: '/login',
@@ -66,5 +81,8 @@ const router = createRouter({
     }
     ]
 })
-
+router.beforeEach((to, from, next) => {
+  window.scrollTo({ top: 0, behavior: 'smooth'})
+  next()
+})
 export default router

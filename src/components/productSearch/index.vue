@@ -24,30 +24,35 @@ defineProps({
   business_hours:{
     type: String,
     default: ''
+  },
+  productImage:{
+    type: String,
+    default: ''
   }
 })
-const emit = defineEmits(['goProductClick'])
+const emit = defineEmits(['goProducts'])
 const goProduct = () => {
-  emit('goProductClick')
+  emit('goProducts')
 }
 </script>
 
 <template>
-    <template>
-    <div class="ml-4">
-      <p  class="font-bold">{{ storeName }}</p>
-      <small class="font-bold">小木屋鬆餅</small><br>
-      <i class="fa-solid fa-star text-yellow-400 mr-1"></i><span>{{ score }}</span>
-      <i class="fa-solid fa-clock text-gray ml-5 mr-2"></i><span>{{ business_hours }}</span>
-    </div>
-  </template>
-  <div class="flex mt-5 items-center justify-between px-3 py-3 shadow-lg" @click="goProduct">
-        <div class="flex items-center">
-        <img :src="image" alt="" class="h-14">
-        <p>{{ name }}</p>
-        </div>
-        <div>
-        <p>${{ price }}</p>
+  <div class="flex">
+    <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="" class="w-14 h-14">
+    <div class="ml-2">
+      <p class="font-bold text-xl">{{ storeName }}</p>
+      <div class="flex mb-2">
+        <span class="bg-slate-200 rounded-sm">{{ business_hours }}</span>
+        <div class=" bg-slate-200 ml-3 rounded-md px-2">
+        <i class="fa-solid fa-star text-yellow-400 mr-1"></i><span>{{ score }}</span>
         </div>
       </div>
+    </div>
+  </div>
+    <div class="inline-block cursor-pointer" @click="goProduct">
+      <div class="border-2 border-solid border-slate-300 w-36 h-40 my-2 ml-2">
+        <img :src="productImage" alt="" class=" w-32 ">
+        <p class="text-center">{{ name }}</p>
+      </div>
+    </div>
 </template>
