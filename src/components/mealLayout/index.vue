@@ -10,13 +10,7 @@ import { ClockCircleOutlined } from '@ant-design/icons-vue';
 const userStore = useUserStore()
 const productStore = useProductStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
-const cartAmount = computed(() => {
-  let amount = 0
-  for (const item of productStore.cart ) {
-    amount += item.quantity
-  }
-  return amount
-})
+const cartAmount = computed(() => Object.keys(productStore.cart).length )
 
 const footerImage = ref([
   {
@@ -51,7 +45,7 @@ const changePage = (url) => {
 
 <template>
   <div class="flex flex-col min-h-screen">
-    <header :class="['py-5 text-center fixed w-full top-0 z-10', { darkMode: isDarkTheme }]">
+    <header :class="['py-5 text-center fixed w-full top-0 z-10 bg-white', { darkMode: isDarkTheme }]">
       <img src="https://www.beclass.com/share/202404/284d8186613e2989e1bf0846r.png" alt=" " class="h-14 inline-block">
     </header>
   <div class="flex-1 pt-24 pb-16">

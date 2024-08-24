@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useProductStore } from '@/store/product';
 
@@ -9,10 +10,11 @@ const userStore = useUserStore()
 const getInform = userStore.formData
 const productStore = useProductStore()
 const cart = computed(() => productStore.cart)
-const storeId = ref(cart.value[0].storeId)
 const store = computed(() => productStore.stores.find(store => store.id === storeId.value))
 const order = computed(() => productStore.order)
 const router = useRouter()
+const route = useRoute()
+const storeId = ref(Number(route.params.storeId))
 const changePage = (url) => {
   router.push(url)
 }
@@ -34,7 +36,7 @@ const changePage = (url) => {
     </div>
   <div class="bg-white py-3 px-3">
       <p class="font-bold text-lg pb-2">餐點</p>
-  <div class="flex mt-3 items-center my-3 py-3 rounded-lg mx-2" v-for="item in cart" :key="item">
+  <div class="flex mt-3 items-center my-3 py-3 rounded-lg mx-2" v-for="item in productStore.cart[storeId]" :key="item">
     <img :src="item.image" alt="image" class="h-24">
     <div>
       <p class="font-bold text-lg">{{ item.name }}</p>

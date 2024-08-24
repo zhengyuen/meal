@@ -37,20 +37,19 @@ console.log(searchValue)
 <header>
   <div v-if="isDarkTheme" class="flex justify-center items-center bg-brown">
   <p class="bg-brown rounded-md w-16 text-white text-center">找地區</p>
-  <!-- <select class="text-black"><option v-for="item in area" :key="item" :value="item">{{ item }}</option></select> -->
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" @keydown="handleSearch" id="search">
   <label for="search" class="cursor-pointer"><i class="fa-solid fa-magnifying-glass ml-2"></i></label>
 </div>
-<div v-else class="flex justify-center items-center bg-brown mb-2 py-1 w-full fixed">
+<div class="flex justify-center items-center bg-brown mb-2 py-1 w-full fixed">
   <p class="bg-brown rounded-md w-16 text-white text-center">找地區</p>
-  <a-space >
+  <a-space>
     <a-select
       ref="select"
       style="width: 90px"
       @focus="none"
       @change="handleChange"
     >
-      <a-select-option v-for="item in area" :key="item" :value="item" v-model="value"></a-select-option>
+      <a-select-option v-for="item in area" :key="item"></a-select-option>
     </a-select>
     </a-space>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" @keydown="handleSearch" id="search">

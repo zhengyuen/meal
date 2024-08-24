@@ -5,45 +5,25 @@ import { useProductStore } from '@/store/product';
 
 const productStore = useProductStore()
 const cart = computed(() => productStore.cart || [])
-// const newCart = computed(() => productStore.cart.filter(store => store.storeId === 2 ))
-
 const router = useRouter()
-const order = () => {
-  router.push('/order')
-}
+
+console.log(productStore.cart)
 
 const changePage = (url) => {
   router.push(url)
 }
 
+const cartVal = Object.values(cart.value)
+console.log(cartVal)
 
-const totalPrice = computed(() => {
-  let price = 0
-  for (const item of productStore.cart){
-    price += item.price * item.quantity
-  }
-  return price
-})
+console.log(Object.keys(productStore.cart))
 
-const adjustQuantity = (id, num) => {
-  // 有產品
-    cart.value = cart.value.map((product) => {
-      if (product.id === id){
-      if (product.quantity > 1 ||(product.quantity === 1 && num > 0 )){
-      return product.quantity += num
-    }if (product.quantity === 1 && num < 0 ){
-      const newCart = productStore.cart.filter(product => id !== product.id)
-      productStore.setCart(newCart)
-      cart.value = newCart
-      }
-      return product
-    }
-    })
-  }
   const deleteProduct = (id) => {
-    const newCart = productStore.cart.filter(product => id !== product.id)
-      productStore.setCart(newCart)
-      cart.value = newCart
+    const cartId = Object.keys(productStore.cart).filter(storeId => Number(storeId) === id)
+    delete productStore.cart[cartId]
+    return productStore.cart
+      // productStore.setCart(newCart)
+      // cart.value = newCart
   }
 </script>
 
@@ -53,72 +33,26 @@ const adjustQuantity = (id, num) => {
   </header>
   <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200">
-      <p class="text-2xl">購物車</p>
-  <p>全部 {{ cart.length }} 筆</p>
-  <div class="flex items-center shadow-md my-3 py-2 rounded-lg bg-white mx-2" v-for="(item) in cart" :key="item" >
-    <!-- <template > -->
-      <!-- <div v-if="item.storeId === 1" > -->
-        <!-- <div v-if="id < 2" class="flex items-center mx-auto py-5">
-          <img src="https://tb-static.uber.com/prod/image-proc/processed_images/660e70c0b191d7c39a2d1f155712e03d/c4114ef7f0cc2f8ee04dbb216969493e.jpeg" alt="" class="w-20 h-20 object-cover mx-6 rounded-full mb-3">
-          <div class="mx-2 my-3">
-          <h1 class="text-lg font-bold">小木屋鬆餅</h1>
-          <p>{{ item.storeName }}</p>
-          <p>{{ item.id }} 項 · $ {{ item.price }}</p>
+      <p class="font-bold text-xl mx-2 mt-2">購物車</p>
+      <div class="items-center shadow-md my-4 py-2 px-3 rounded-lg bg-white mx-3"  v-for="(item) in cartVal" :key="item">
+        <div class="flex items-center">
+          <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-20 relative">
+            <div class="ml-3" >
+              <!-- <P>{{ Object.values(item)[0].storeId }}</P> -->
+              <p class="font-bold text-lg text-slate-400">小木屋鬆餅</p>
+              <p class="font-bold text-xl"> {{ item[0].storeName }}</p>
+              <p>共 {{item.length}} 項</p>
+            </div>
+            <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item[0].storeId)">
+              <i class="fa-regular fa-trash-can  text-sm"></i>
+            </div>
         </div>
-          <div class="text-center w-1/4 ml-5" @click="changePage('/carts')">
-            <button class="text-white bg-brown w-full rounded-lg h-10">檢視購物車</button>
+            <div class="text-center my-3">
+              <button class="bg-brown text-white w-full rounded-lg h-10" @click="changePage(`/carts/${item[0].storeId}`)">檢視購物車</button>
+            </div>
           </div>
-        </div> -->
-        <!-- <h1>{{ item.storeName }}</h1> -->
-        <img :src="item.image" alt="image" class="h-20 relative">
-        <div>
-          <P>{{ item.storeId }}</P>
-          <p class="font-bold text-xl">{{ item.name }}</p>
-          <p class="font-bold text-xl">$ {{ item.price }}</p>
-          <span class="text-slate-400">{{ item.temperature }}</span>
-          <span class="text-slate-400 ml-1">{{ item.sweetness }}</span>
-        </div>
-        <div class=" absolute right-12">
-          <button class="rounded-l-md w-6 text-white  bg-brown" @click="adjustQuantity(item.id, -1)">-</button>
-          <input type="text" class="w-10 text-center" :value="item.quantity">
-          <button class="rounded-r-md w-6 text-white bg-brown " @click="adjustQuantity(item.id, 1)">+</button>
-        </div>
-        <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item.id)">
-          <i class="fa-regular fa-trash-can  text-sm"></i>
-        </div>
-      <!-- </div> -->
-    <!-- </template> -->
-
-    <!-- <template v-else>
-      <img :src="item.image" alt="image" class="h-20 relative">
-      <div>
-        <P>{{ item.storeId }}</P>
-        <p></p>
-        <p class="font-bold text-xl">{{ item.name }}</p>
-        <p class="font-bold text-xl">$ {{ item.price }}</p>
-        <span class="text-slate-400">{{ item.temperature }}</span>
-        <span class="text-slate-400 ml-1">{{ item.sweetness }}</span>
-      </div>
-      <div class=" absolute right-12">
-      <button class="rounded-l-md w-6 text-white  bg-brown" @click="adjustQuantity(item.id, -1)">-</button>
-      <input type="text" class="w-10 text-center" :value="item.quantity">
-      <button class="rounded-r-md w-6 text-white bg-brown " @click="adjustQuantity(item.id, 1)">+</button>
-      </div>
-      <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item.id)">
-      <i class="fa-regular fa-trash-can  text-sm"></i>
-      </div>
-    </template> -->
-  </div>
-
-
-  <div class="flex items-center shadow-md my-3 py-2 justify-between px-7 mx-2 rounded-lg bg-white">
-      <p class="text-lg font-bold">合計：$ {{ totalPrice }}</p>
-      <div class="bg-brown text-white rounded-lg text-center w-1/4 text-md h-10 ">
-      <button @click="order" class="pt-2 ">去買單</button>
     </div>
   </div>
-  </div>
-</div>
 </template>
 
 <style scope></style>

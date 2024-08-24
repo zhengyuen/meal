@@ -27,7 +27,7 @@ const changePage = (url) => {
     <div class="flex-1 bg-slate-200">
       <p class="text-2xl">我的訂單</p>
       <p>全部 {{ order.length }} 筆</p>
-      <div class="shadow-md my-3 py-3 px-5 rounded-lg bg-white text-2xl text-bold flex items-center" v-for="item in order" :key="item" @click="changePage('/orders')">
+      <div class="shadow-md my-3 py-3 px-5 mx-3 rounded-lg bg-white text-2xl text-bold flex items-center" v-for="item in order" :key="item" @click="changePage('/orders')">
         <div>
       <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-20 object-cover">
       </div>

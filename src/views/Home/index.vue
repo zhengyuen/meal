@@ -73,6 +73,11 @@ const menuImage = reactive([
   </a-carousel>
   <div v-if="isDarkTheme" class="flex justify-center my-3 text-white">
     <div v-for="items in menuImage" :key="items" class="flex flex-col items-center pr-4 last:pr-0">
+      <i class="fa-light fa-receipt"></i>
+      <i class="fa-light fa-magnifying-glass"></i>
+      <i class="fa-light fa-ticket-simple"></i>
+      <i class="fa-light fa-money-check"></i>
+      <i class="fa-light fa-note-sticky"></i>
     <img :src="items.image" alt="image" class="w-8">
     <p>{{ items.title }}</p>
     </div>

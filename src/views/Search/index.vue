@@ -13,18 +13,23 @@ const route = useRoute()
 const router = useRouter()
 const keyword = ref(route.query.keyword)
 const productStore = useProductStore()
-const storeId = computed(() => useProductStore.stores.find(store => store.id === searchData.value.id))
 const stores = computed(() => productStore.stores.filter(stores => stores.name.includes(keyword.value)))
-// const product = computed(() => productStore.stores[0].products.filter(products => products.name.includes(keyword.value)))
 const product = computed(() => searchData.value[0].products)
+const products = computed(() => productStore.stores[0].products)
+
 const searchData = ref([])
 const changePage = (url) => {
   router.push(url)
 }
+const activeKey = ref('1');
 const searchValue = ref('')
+// const products = productStore.stores[0].products.filter(product => product.name.includes('花生'))
+console.log(product)
 const handleSearch = (event) => {
   if (event.keyCode === 13) {
-    searchData.value = productStore.stores.filter(store => store.name.includes(searchValue.value))
+    const stores = productStore.stores.filter(store => store.name.includes(searchValue.value))
+    searchData.value = [...stores]
+    keyword.value = searchValue.value
   }
 }
 watchEffect(() => {
@@ -37,19 +42,15 @@ watchEffect(() => {
       }
     }
     if(products.length) {
-      // for(const product of products){
         searchData.value.push({
           ...store,
           products
         },
         )
-      // }
+      }
     }
   }
-})
-console.log(searchValue)
-console.log(stores)
-console.log(searchData.value)
+)
 
 </script>
 
@@ -63,7 +64,22 @@ console.log(searchData.value)
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
 <p class="text-xl font-bold mt-10 pl-3">#搜尋結果</p>
-<template v-if ="searchData.length">
+<a-tabs v-model:activeKey="activeKey" class="px-1">
+    <a-tab-pane key="1" tab="門市"  v-model="searchValue">
+    <template v-if="stores.length">
+    <home-card v-for="item in stores " :key="item"
+    :name="item.name"
+    :time="item.business_hours"
+    image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s"
+    @go-products="changePage(`/store/${item.id}/products`)"
+    />
+    </template>
+    <template v-else>
+    <p class="ml-5 text-center text-lg">沒有您要搜尋的結果</p>
+    </template>
+    </a-tab-pane>
+    <a-tab-pane key="2" tab="商品" v-model="searchValue">
+      <template v-if ="searchData.length && !stores.length">
 <div v-for="(item, idx) in searchData"  :key="idx" class="my-2">
   <div class="flex" >
     <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="" class="w-14 h-14">
@@ -77,26 +93,23 @@ console.log(searchData.value)
       </div>
     </div>
   </div>
-    <div v-for="(item, id) in product" :key="id" class="inline-block" @click="changePage(`/store/${item.id}/product/${item.id}`)">
-      <div v-if="id < 2" class="border-2 border-solid border-slate-300 w-40 h-44 my-2 ml-2 ">
-        <img :src="item.image" alt="" class=" w-32 h-32 object-cover">
+  <div v-for="(item, id) in product" :key="id" class="inline-block" @click="changePage(`/store/${id+1}/product/${item.id}`)">
+      <div v-if="id < 2" class="border-2 border-solid border-slate-300 w-40 h-44 my-2 ml-2">
+        <img :src="item.image" alt="" class="w-32 h-32 object-cover">
         <p class="text-center">{{ item.name }}</p>
       </div>
     </div>
     <i class="fa-solid fa-circle-chevron-right text-lg ml-2"></i>
   </div>
 </template>
-<template v-if="stores.length">
-  <home-card v-for="item in stores" :key="item"
-  :name="item.name"
-  :time="item.business_hours"
-  image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s"
-  @go-products="changePage(`/store/${item.id}/products`)"
-  />
-</template>
 <template v-else>
   <p class="ml-5 text-center text-lg">沒有您要搜尋的結果</p>
 </template>
+    </a-tab-pane>
+  </a-tabs>
+
+
+
 </template>
 
 <style scope></style>

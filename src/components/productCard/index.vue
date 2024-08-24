@@ -23,7 +23,7 @@ const goProduct = () => {
 <template>
   <div class="flex mt-5 items-center justify-between px-3 py-3 shadow-lg" @click="goProduct">
         <div class="flex items-center">
-        <img :src="image" alt="" class="h-14">
+        <img :src="image" alt="" class=" h-14">
         <p>{{ name }}</p>
         </div>
         <div>

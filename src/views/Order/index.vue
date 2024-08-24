@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useProductStore } from '@/store/product';
 import { message } from 'ant-design-vue';
@@ -9,27 +10,21 @@ import { message } from 'ant-design-vue';
 const payMethod = ['貨到付款','線上支付']
 const getMethod = ['自取','外送']
 const userStore = useUserStore()
+const route = useRoute()
 const buyerInform = computed(() => userStore.formData)
 const productStore = useProductStore()
 const cart = computed(() => productStore.cart)
-const orders = computed(() => productStore.order)
-const storeId = computed(() => productStore.cart[0].storeId)
-const token = computed(() => productStore.token)
-  // let storeIdVal = []
-// for(const item of productStore.cart){
-//   storeIdVal = item.storeId
+const storeId = ref(Number(route.params.storeId))
 
-//   console.log(storeIdVal)
-//   }
-// }
-// )
+const orders = computed(() => productStore.order)
+const token = computed(() => productStore.token)
+
 const store = computed(() => productStore.stores.find(store => store.id === storeId.value))
-// console.log(cart.value[0].storeId)
-console.log(storeId)
+
 
 const totalPrice = computed(() => {
   let price = 0
-  for (const item of productStore.cart){
+  for (const item of productStore.cart[storeId.value]){
     price += item.price * item.quantity
   }
   return price
@@ -56,15 +51,16 @@ const addOrder = () => {
   }else{
   productStore.setOrder([
     ...productStore.order,{
+  orderId: `order${storeId.value}`,
   payMethod: order.payMethod,
   getMethod: order.getMethod,
   totalPrice: totalPrice,
   store: store.value.name,
-  storeId: store.value.id,
-  products: cart.value}
+  storeId: storeId,
+  products: productStore.cart[storeId.value]}
   ])
   }
-  changePage('/result')
+  changePage(`/result/${storeId.value}`)
   message.success('您已成功下單')
 }
 
@@ -102,7 +98,7 @@ const addOrder = () => {
   </div>
 <div class="bg-white py-3 px-3">
       <p class="font-bold text-lg pb-2">餐點</p>
-  <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2" v-for="item in cart" :key="item">
+  <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2" v-for="item in productStore.cart[storeId]" :key="item">
     <img :src="item.image" alt="image" class="h-20">
     <div>
       <p class="font-bold text-xl">{{ item.name }}</p>

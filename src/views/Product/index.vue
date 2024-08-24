@@ -13,9 +13,8 @@ const productId = ref(Number((route.params.id)))
 const storeId = ref(Number(route.params.storeId))
 const stores = computed(() => productStore.stores.find(store => store.id === storeId.value))
 
-const products = computed(() => stores.value.products.find(product => product.id === productId.value))
-console.log(products.value);
-
+const product = computed(() => stores.value.products.find(product => product.id === productId.value))
+console.log(product.value);
 
 
 const cart = ref(productStore.cart || [])
@@ -32,52 +31,49 @@ const amount = ref(1);
       amount.value -= 1
     }
   }
+
+console.log(cart.length)
+
+const cartList = {
+    1: [{}, {}, {}],
+    2: [{}, {} ]
+  }
 const addCart = () => {
-// 有東西
-  const hasProduct = productStore.cart.some(product => product.id === productId.value)
-  if(hasProduct){
-    const newCart = productStore.cart.map(product => {
-      if (product.id === productId.value && product.storeId === storeId.value){
-        product.quantity += amount.value
-        product.temperature = drinkStatus.temperature
-        product.sweetness = drinkStatus.sweetness
-        return product
-      }if(product.storeId !== storeId.value){
-        message.success('請選擇同一店家商品')
-        console.log(products)
-        productStore.setCart([...productStore.cart, {
-      ...products.value,
+//同一店家
+if (productStore.cart[storeId.value]) {
+  productStore.setCart({
+    ...productStore.cart,
+    [storeId.value]:[
+      ...productStore.cart[storeId.value],
+    {
+      ...product.value,
+      storeId: storeId.value,
       quantity: amount.value,
-      storeId,
       storeName: stores.value.name,
       temperature: drinkStatus.temperature,
-      sweetness: drinkStatus.sweetness
-    }])
+      sweetness: drinkStatus.sweetness,
+    }
+    ]
+})
+} else {
+  productStore.setCart({
+    ...productStore.cart,
+    [storeId.value]:[
+      {
+        ...product.value,
+        storeId: storeId.value,
+        quantity: amount.value,
+        storeName: stores.value.name,
+        temperature: drinkStatus.temperature,
+        sweetness: drinkStatus.sweetness
       }
-      return product
-    })
-    productStore.setCart(newCart)
-  } else { // 沒東西
-    productStore.setCart([...productStore.cart, {
-      ...products.value,
-      quantity: amount.value,
-      storeId,
-      storeName: stores.value.name,
-      temperature: drinkStatus.temperature,
-      sweetness: drinkStatus.sweetness
-    }])
-  }
-  // router.push(`/store/${storeId.value}/products`)
-  message.success('已加入購物車')
-  }
-
-const storeCart = [productStore.cart.filter(product => product.storeId === storeId.value)]
-
-const newStoreCart =[
-  ...productStore.storeCart,
-  ...storeCart
   ]
-  productStore.setStoreCart(newStoreCart)
+  })
+}
+router.push(`/store/${storeId.value}/products`)
+message.success('已加入購物車')
+
+  }
 
 const drinkStatus = reactive({
   temperature: '正常冰',
@@ -90,9 +86,9 @@ const sweetness = ['正常糖','七分糖','半糖','三分糖','無糖']
 
 <template>
   <header class="pl-2"><i class="fa-solid fa-chevron-left" @click="goProduct"></i></header>
-  <h1 class="font-bold text-lg ml-1">{{ products.name}}</h1>
+  <h1 class="font-bold text-lg ml-1">{{ product.name}}</h1>
   <div class="mx-auto">
-    <img :src="products.image" alt="image" class="h-1/2 mx-auto">
+    <img :src="product.image" alt="image" class="h-1/2 mx-auto">
   </div>
 
 <div class="mb-5 px-3">
@@ -120,7 +116,7 @@ const sweetness = ['正常糖','七分糖','半糖','三分糖','無糖']
 </div>
 <hr>
 <div class="px-2">
-  <h1 class="my-5">總金額：{{ amount*products.price }} 元</h1>
+  <h1 class="my-5">總金額：{{ amount*product.price }} 元</h1>
   <div class="w-[112px] my-5 bg-lightGray">
   <button class="rounded-l-md w-6" @click="minus">-</button>
   <input type="text" class="w-16 text-center" v-model="amount">
