@@ -115,11 +115,11 @@ const sweetness = ['正常糖','七分糖','半糖','三分糖','無糖']
   <input type="text" class="border-2 border-gray rounded-md w-full px-3 mt-2 h-8 mb-6"> -->
 </div>
 <hr>
-<div class="px-2">
+<div class="px-2" >
   <h1 class="my-5">總金額：{{ amount*product.price }} 元</h1>
-  <div class="w-[112px] my-5 bg-lightGray">
+  <div class="w-[112px] my-5 bg-lightGray text-black">
   <button class="rounded-l-md w-6" @click="minus">-</button>
-  <input type="text" class="w-16 text-center" v-model="amount">
+  <input type="text" class="w-16 text-center " v-model="amount">
   <button class="rounded-r-md w-6" @click="plus">+</button>
   </div>
 

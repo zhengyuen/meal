@@ -33,15 +33,15 @@ console.log(Object.keys(productStore.cart))
   </header>
   <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200">
-      <p class="font-bold text-xl mx-2 mt-2">購物車</p>
+      <p class="font-bold text-xl mx-2 mt-2 text-black">購物車</p>
       <div class="items-center shadow-md my-4 py-2 px-3 rounded-lg bg-white mx-3"  v-for="(item) in cartVal" :key="item">
         <div class="flex items-center">
           <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-20 relative">
             <div class="ml-3" >
               <!-- <P>{{ Object.values(item)[0].storeId }}</P> -->
               <p class="font-bold text-lg text-slate-400">小木屋鬆餅</p>
-              <p class="font-bold text-xl"> {{ item[0].storeName }}</p>
-              <p>共 {{item.length}} 項</p>
+              <p class="font-bold text-xl text-black"> {{ item[0].storeName }}</p>
+              <p class="text-black">共 {{item.length}} 項</p>
             </div>
             <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item[0].storeId)">
               <i class="fa-regular fa-trash-can  text-sm"></i>

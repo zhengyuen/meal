@@ -55,7 +55,7 @@ const changePage = (url) => {
   <footer :class="['fixed bottom-0 w-full bg-white py-2', { darkMode: isDarkTheme }]">
     <ul class="flex w-full justify-center">
       <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-7 cursor-pointer" @click="changePage(item.key)">
-        <a-badge v-if="item.image ==='fa-cart-shopping'" :count="cartAmount" size="large">
+        <a-badge v-if="item.image ==='fa-cart-shopping'" :count="cartAmount" size="large" :class="[{ darkMode: isDarkTheme }]">
       <i :class="['fa-solid text-2xl', item.image] "></i>
       </a-badge>
       <i v-else :class="['fa-solid text-2xl', item.image] "></i>

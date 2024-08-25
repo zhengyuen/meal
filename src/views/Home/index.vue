@@ -33,37 +33,33 @@ const carouseImage = reactive([
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk5dOJ6yCfrcszarEhvXizCWOHBSEfcQolQg&s'
 ])
 
-const menuImage = reactive([
+const menuImage = ref([
   {
-    image:'https://cdn-icons-png.flaticon.com/128/5636/5636698.png',
+    image:'fa-magnifying-glass',
     title: '找附近'
   },
   {
-    image:'https://cdn-icons-png.flaticon.com/128/16312/16312795.png',
+    image:'fa-receipt',
     title: '訂單'
   },
   {
-    image:'https://cdn-icons-png.flaticon.com/128/7653/7653284.png',
+    image:'fa-ticket-simple',
     title: '優惠券'
   },
   {
-    image:'https://cdn-icons-png.flaticon.com/128/14897/14897276.png',
+    image:'fa-money-check',
     title: '兌換券'
   },
   {
-    image:'https://cdn-icons-png.flaticon.com/128/9585/9585389.png',
+    image:'fa-note-sticky',
     title: '曾點過'
   }
 ])
 </script>
 
 <template>
-<div v-if="isDarkTheme" class="text-center px-8 fixed  z-10 w-full bg-black text-black">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" ></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
-</div>
-<div v-else class="text-center px-8 fixed z-10 w-full bg-white">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
+<div class="text-center px-8 fixed z-10 w-full bg-white" :class="[{ darkMode: isDarkTheme }]">
+  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" :class="[{ 'text-black':isDarkTheme }]"></i>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
   <a-carousel class="w-full mt-6" autoplay>
@@ -71,21 +67,13 @@ const menuImage = reactive([
 			<img class="w-full h-[200px] object-cover" :src="item"/>
 		</div>
   </a-carousel>
-  <div v-if="isDarkTheme" class="flex justify-center my-3 text-white">
+  <div  class="flex justify-center my-3 text-white">
     <div v-for="items in menuImage" :key="items" class="flex flex-col items-center pr-4 last:pr-0">
-      <i class="fa-light fa-receipt"></i>
-      <i class="fa-light fa-magnifying-glass"></i>
-      <i class="fa-light fa-ticket-simple"></i>
-      <i class="fa-light fa-money-check"></i>
-      <i class="fa-light fa-note-sticky"></i>
-    <img :src="items.image" alt="image" class="w-8">
-    <p>{{ items.title }}</p>
-    </div>
-  </div>
-  <div v-else class="flex justify-center my-3">
-    <div v-for="items in menuImage" :key="items" class="flex flex-col items-center pr-4 last:pr-0">
-    <img :src="items.image" alt="image" class="w-8">
-    <p>{{ items.title }}</p>
+      <div v-if="items.image === 'fa-receipt'" @click="changePage('/orderMenu')">
+        <i :class="['fa-solid text-brown text-xl cursor-pointer', items.image, { darkMode: isDarkTheme }]"></i>
+      </div>
+        <i v-else :class="['fa-solid text-brown text-xl cursor-pointer', items.image, { darkMode: isDarkTheme }]"></i>
+    <p class="text-black" :class="[{ darkMode: isDarkTheme }]">{{ items.title }}</p>
     </div>
   </div>
 

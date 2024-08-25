@@ -35,11 +35,6 @@ console.log(searchValue)
 
 <template>
 <header>
-  <div v-if="isDarkTheme" class="flex justify-center items-center bg-brown">
-  <p class="bg-brown rounded-md w-16 text-white text-center">找地區</p>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" @keydown="handleSearch" id="search">
-  <label for="search" class="cursor-pointer"><i class="fa-solid fa-magnifying-glass ml-2"></i></label>
-</div>
 <div class="flex justify-center items-center bg-brown mb-2 py-1 w-full fixed">
   <p class="bg-brown rounded-md w-16 text-white text-center">找地區</p>
   <a-space>
@@ -53,7 +48,7 @@ console.log(searchValue)
     </a-select>
     </a-space>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" @keydown="handleSearch" id="search">
-    <label for="searchValue" class="cursor-pointer" @click="handleSearch"><i class="fa-solid fa-magnifying-glass ml-2 text-white" ></i></label>
+    <label for="searchValue" class="cursor-pointer"  id="search"><i class="fa-solid fa-magnifying-glass ml-2 text-white" @click="handleSearch"></i></label>
 </div>
 </header>
 <div class="mt-14">

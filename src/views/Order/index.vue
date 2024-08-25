@@ -44,21 +44,35 @@ const order = reactive({
 })
 const addOrder = () => {
   // 相同店家
-  if(storeId === cart.value.storeId){
-    productStore.setOrder(
-      ...productStore.order.products,{...cart.value}
-    )
+  if(productStore.order[storeId.value]){
+    productStore.setOrder({
+      ...productStore.order,
+      [storeId.value]:[
+        ...productStore.order[storeId.value],
+        {
+          orderId: `order${storeId.value}`,
+          payMethod: order.payMethod,
+          getMethod: order.getMethod,
+          totalPrice: totalPrice,
+          store: store.value.name,
+          storeId: storeId,
+          products: productStore.cart[storeId.value]
+        }
+      ]
+  })
   }else{
-  productStore.setOrder([
-    ...productStore.order,{
+  productStore.setOrder({
+    ...productStore.order,
+  [storeId.value]:[
+  {
   orderId: `order${storeId.value}`,
   payMethod: order.payMethod,
   getMethod: order.getMethod,
   totalPrice: totalPrice,
   store: store.value.name,
   storeId: storeId,
-  products: productStore.cart[storeId.value]}
-  ])
+  products: productStore.cart[storeId.value]}]
+  })
   }
   changePage(`/result/${storeId.value}`)
   message.success('您已成功下單')
@@ -73,16 +87,17 @@ const addOrder = () => {
 </script>
 
 <template>
+  <header class="text-center ">
+    <i class="fa-solid fa-chevron-left left-3 absolute" @click="changePage('/cart')"></i>
+    訂單詳情
+  </header>
 <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200">
-      <header class="text-center bg-white fixed w-full ">
-        <i class="fa-solid fa-chevron-left left-3 absolute" @click="changePage('/cart')"></i>
-        訂單詳情</header>
-    <div class="shadow-md my-3 py-3 px-5 mt-8 rounded-lg bg-white text-blue-500 text-bold">
+    <div class="shadow-md my-3 py-3 px-5 mt-3 rounded-lg bg-white text-blue-500 text-bold">
       <p class="font-bold text-lg pb-2">{{ store.name }}</p>
       <i class="fa-solid fa-phone mr-3"></i><span>07-722-6777</span>
     </div>
-    <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white">
+    <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black">
       <p class="font-bold text-lg pb-2">訂購人資料</p>
       <div class="text-right" @click="edit">
         <i class="fa-solid fa-pen-to-square"></i>
@@ -96,9 +111,9 @@ const addOrder = () => {
         </p>
       </div>
   </div>
-<div class="bg-white py-3 px-3">
+<div class="bg-white py-3 px-3 text-black">
       <p class="font-bold text-lg pb-2">餐點</p>
-  <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2" v-for="item in productStore.cart[storeId]" :key="item">
+  <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2 text-black" v-for="item in productStore.cart[storeId]" :key="item">
     <img :src="item.image" alt="image" class="h-20">
     <div>
       <p class="font-bold text-xl">{{ item.name }}</p>
@@ -112,7 +127,7 @@ const addOrder = () => {
   </div>
 </div>
 
-  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white">
+  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black">
       <p class="font-bold text-lg pb-2">付款方式</p>
       <a-button v-for="items in payMethod" class="font-bold"
       :key="items"
@@ -121,17 +136,18 @@ const addOrder = () => {
       :class="['mr-2 last:mr-0', { 'border-2 border-brown border-solid':items === order.payMethod }]"
       >{{ items }}</a-button>
   </div>
-  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white">
+  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black">
       <p class="font-bold text-lg pb-2">取貨方式</p>
       <a-button v-for="items in getMethod" class="font-bold"
       :key="items"
+      :focus="none"
       :value="items"
       @click="order.getMethod = items"
       :class="['mr-2 last:mr-0', { 'border-2 border-brown border-solid': items === order.getMethod }]"
       >{{ items }}</a-button>
   </div>
 
-  <div class="flex justify-between items-center shadow-md my-3 py-3 px-3 rounded-lg bg-white">
+  <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black">
       <p class="font-bold text-lg pb-2">總計 $ {{ totalPrice }}</p>
       <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md" @click="addOrder">
         <button class="h-10">提交訂單</button>

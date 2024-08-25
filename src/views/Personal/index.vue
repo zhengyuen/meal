@@ -8,10 +8,9 @@ const router = useRouter()
 const userStore = useUserStore()
 const formData = ref(userStore.formData)
 const personal = ref(userStore.personal)
-const isDarkTheme = ref(userStore.isDarkTheme)
-const changeTheme = (isDarkTheme) => {
-  // isDarkTheme = !isDarkTheme
-  userStore.setIsDarkTheme(!isDarkTheme)
+const isDarkTheme = computed(() => (userStore.isDarkTheme))
+const changeTheme = () => {
+  userStore.setIsDarkTheme(!isDarkTheme.value)
 }
 
 const goToEdit = () => {
@@ -73,7 +72,7 @@ onMounted(() => {
 </template>
 
 <style scope>
-.ant-switch-inner{
-  @apply !bg-orange-400
+.ant-switch.ant-switch-checked .ant-switch-inner {
+  @apply !bg-orange-400;
 }
 </style>
