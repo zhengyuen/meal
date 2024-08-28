@@ -13,13 +13,16 @@ const userStore = useUserStore()
 const route = useRoute()
 const buyerInform = computed(() => userStore.formData)
 const productStore = useProductStore()
-const cart = computed(() => productStore.cart)
+const cart = computed(() => productStore.cart || [])
 const storeId = ref(Number(route.params.storeId))
 
 const orders = computed(() => productStore.order)
 const token = computed(() => productStore.token)
 
+console.log(productStore.cart)
+
 const store = computed(() => productStore.stores.find(store => store.id === storeId.value))
+console.log(Object.keys(productStore.cart).filter(item => Number(item) !== storeId.value))
 
 
 const totalPrice = computed(() => {
@@ -42,25 +45,8 @@ const order = reactive({
   payMethod: '貨到付款',
   getMethod: '自取',
 })
-const addOrder = () => {
+const addOrder = (id) => {
   // 相同店家
-  if(productStore.order[storeId.value]){
-    productStore.setOrder({
-      ...productStore.order,
-      [storeId.value]:[
-        ...productStore.order[storeId.value],
-        {
-          orderId: `order${storeId.value}`,
-          payMethod: order.payMethod,
-          getMethod: order.getMethod,
-          totalPrice: totalPrice,
-          store: store.value.name,
-          storeId: storeId,
-          products: productStore.cart[storeId.value]
-        }
-      ]
-  })
-  }else{
   productStore.setOrder({
     ...productStore.order,
   [storeId.value]:[
@@ -73,11 +59,10 @@ const addOrder = () => {
   storeId: storeId,
   products: productStore.cart[storeId.value]}]
   })
-  }
-  changePage(`/result/${storeId.value}`)
   message.success('您已成功下單')
+  changePage(`/result/${storeId.value}`)
 }
-
+// console.log(productStore.cart)
 // onMounted (()=> {
 // 	if (!token.value) {
 // 		changePage('/login')
@@ -133,6 +118,7 @@ const addOrder = () => {
       :key="items"
       :value="items"
       @click="order.payMethod = items"
+      :focus="outline-0"
       :class="['mr-2 last:mr-0', { 'border-2 border-brown border-solid':items === order.payMethod }]"
       >{{ items }}</a-button>
   </div>
@@ -140,7 +126,7 @@ const addOrder = () => {
       <p class="font-bold text-lg pb-2">取貨方式</p>
       <a-button v-for="items in getMethod" class="font-bold"
       :key="items"
-      :focus="none"
+      :focus="outline-0"
       :value="items"
       @click="order.getMethod = items"
       :class="['mr-2 last:mr-0', { 'border-2 border-brown border-solid': items === order.getMethod }]"
@@ -149,7 +135,7 @@ const addOrder = () => {
 
   <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black">
       <p class="font-bold text-lg pb-2">總計 $ {{ totalPrice }}</p>
-      <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md" @click="addOrder">
+      <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md" @click="addOrder(storeId)">
         <button class="h-10">提交訂單</button>
       </div>
   </div>

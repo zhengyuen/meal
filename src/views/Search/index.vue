@@ -4,70 +4,72 @@ import homeCard from '@/components/homeCard/index.vue'
 import { useProductStore } from '@/store/product';
 import { useUserStore } from '@/store/user';
 import { computed, ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
-const route = useRoute()
 const router = useRouter()
-const keyword = ref(route.query.keyword)
 const productStore = useProductStore()
-const stores = computed(() => productStore.stores.filter(stores => stores.name.includes(keyword.value)))
-const product = computed(() => searchData.value[0].products)
-const products = computed(() => productStore.stores[0].products)
+const stores = computed(() => productStore.stores.filter(stores => stores.name.includes(searchValue.value)))
 
-const searchData = ref([])
+const products = computed(() => {
+  const allProduct = []
+for(const item of productStore.stores){
+  for(const product of item.products){
+    allProduct.push({...product, storeId: item.id, storeName: item.name, business_hours: item.business_hours, score: item.score })
+  }
+}
+return allProduct
+
+}
+)
+const product = computed(() => products.value.filter(item => item.name.includes(searchValue.value)) )
+console.log(product)
 const changePage = (url) => {
   router.push(url)
 }
-const activeKey = ref('1');
+const activeKey = ref('stores');
 const searchValue = ref('')
-// const products = productStore.stores[0].products.filter(product => product.name.includes('花生'))
-console.log(product)
+const handelChange = (key) => {
+  activeKey.value = key
+// 另一方法直接篩選的概念(不用 handleSearch、searchData，handelChange 的參數改為 activeKey)
+  // if (activeKey === stores) {
+  //   const stores = computed(() => productStore.stores.filter(stores => stores.name.includes(searchValue.value)))
+  //   return stores || []
+  // }
+  // if (activeKey === product) {
+  //   const product = computed(() => products.value.filter(item => item.name.includes(searchValue.value)) )
+  //   return product || []
+  // }
+}
+const searchData = computed(() => {
+  if (activeKey.value === 'stores') {
+    return stores.value.filter(store => store.name.includes(searchValue.value)) || []
+  }
+  if (activeKey.value === 'products') {
+    return products.value.filter(item => item.name.includes(searchValue.value)) || []
+  }
+})
+
 const handleSearch = (event) => {
   if (event.keyCode === 13) {
-    const stores = productStore.stores.filter(store => store.name.includes(searchValue.value))
-    searchData.value = [...stores]
-    keyword.value = searchValue.value
+    searchData.value
   }
 }
-watchEffect(() => {
-  for (const store of productStore.stores) {
-    let products = []
-    for (const product of store.products) {
-      const hasProduct = product.name.includes(keyword.value)
-      if (hasProduct) {
-        products.push(product)
-      }
-    }
-    if(products.length) {
-        searchData.value.push({
-          ...store,
-          products
-        },
-        )
-      }
-    }
-  }
-)
 
+console.log(searchData)
 </script>
 
 <template>
-<div v-if="isDarkTheme" class="text-center px-8 fixed z-10 w-full bg-black text-black">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
-</div>
-<div v-else class="text-center px-8 fixed z-10 w-full bg-white">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12"></i>
+<div class="text-center px-8 fixed z-10 w-full" :class="[{ 'bg-black text-black':isDarkTheme }]">
+  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12 text-black"></i>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
 <p class="text-xl font-bold mt-10 pl-3">#搜尋結果</p>
-<a-tabs v-model:activeKey="activeKey" class="px-1">
-    <a-tab-pane key="1" tab="門市"  v-model="searchValue">
-    <template v-if="stores.length">
-    <home-card v-for="item in stores " :key="item"
+<a-tabs v-model:activeKey="activeKey" class="px-1" @change="handelChange" :class="[{ 'text-white': isDarkTheme }]">
+    <a-tab-pane key="stores" tab="門市" v-model="searchValue">
+    <template v-if="searchData.length">
+    <home-card v-for="item in searchData " :key="item"
     :name="item.name"
     :time="item.business_hours"
     image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRio9-XKHqz6oLzNr5YuTMHgmcebMXfAEoegg&s"
@@ -78,29 +80,29 @@ watchEffect(() => {
     <p class="ml-5 text-center text-lg">沒有您要搜尋的結果</p>
     </template>
     </a-tab-pane>
-    <a-tab-pane key="2" tab="商品" v-model="searchValue">
-      <template v-if ="searchData.length && !stores.length">
-<div v-for="(item, idx) in searchData"  :key="idx" class="my-2">
-  <div class="flex" >
-    <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="" class="w-14 h-14">
-    <div class="ml-2">
-      <p class="font-bold text-xl">{{ item.name }}</p>
-      <div class="flex mb-2">
-        <span class="bg-slate-200 rounded-sm">{{ item.business_hours }}</span>
-        <div class=" bg-slate-200 ml-3 rounded-md px-2">
-        <i class="fa-solid fa-star text-yellow-400 mr-1"></i><span>{{ item.score }}</span>
+    <a-tab-pane key="products" tab="商品" v-model="searchValue">
+      <template v-if ="searchData.length">
+  <div v-for="(item, idx) in searchData"  :key="idx" class="my-2">
+    <div class="flex" >
+      <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="" class="w-14 h-14">
+      <div class="ml-2">
+        <p class="font-bold text-xl">{{ item.storeName }}</p>
+        <div class="flex mb-2">
+          <span class="bg-slate-200 rounded-sm">{{ item.business_hours }}</span>
+          <div class=" bg-slate-200 ml-3 rounded-md px-2">
+          <i class="fa-solid fa-star text-yellow-400 mr-1"></i><span>{{ item.score }}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div v-for="(item, id) in product" :key="id" class="inline-block" @click="changePage(`/store/${id+1}/product/${item.id}`)">
-      <div v-if="id < 2" class="border-2 border-solid border-slate-300 w-40 h-44 my-2 ml-2">
-        <img :src="item.image" alt="" class="w-32 h-32 object-cover">
-        <p class="text-center">{{ item.name }}</p>
+    <div class="inline-block" @click="changePage(`/store/${item.storeId}/product/${item.id}`)">
+        <div class="border-2 border-solid border-slate-300 w-40 h-44 my-2 ml-2">
+          <img :src="item.image" alt="" class="w-32 h-32 object-cover">
+          <p class="text-center">{{ item.name }}</p>
+        </div>
       </div>
+      <i class="fa-solid fa-circle-chevron-right text-lg ml-2"></i>
     </div>
-    <i class="fa-solid fa-circle-chevron-right text-lg ml-2"></i>
-  </div>
 </template>
 <template v-else>
   <p class="ml-5 text-center text-lg">沒有您要搜尋的結果</p>

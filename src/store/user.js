@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 
 export const useUserStore = defineStore(
   'user',
   () => {
     const token = ref('')
+    const isEng = ref('')
     const setToken = (newToken) => {
       token.value = newToken
     }
@@ -12,7 +13,11 @@ export const useUserStore = defineStore(
     const setIsDarkTheme = (bool) => {
       isDarkTheme.value = bool
     }
-    const formData = ref('')
+    const formData = reactive({
+      name: 'Abby',
+      user: 'jkfds',
+      phone:'7389092390'
+    })
     const setFormData = (newFormData) => {
       formData.value = newFormData
     }
@@ -23,6 +28,7 @@ export const useUserStore = defineStore(
 
     return {
       token,
+      isEng,
       isDarkTheme,
       formData,
       personal,

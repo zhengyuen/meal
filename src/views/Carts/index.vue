@@ -16,9 +16,6 @@ const storeId = ref(Number(route.params.storeId))
 const changePage = (url) => {
   router.push(url)
 }
-console.log(productStore.cart[storeId.value])
-
-
 const totalPrice = computed(() => {
   let price = 0
   for (const item of productStore.cart[storeId.value]){
@@ -27,10 +24,17 @@ const totalPrice = computed(() => {
   return price
 })
 
+const totalQuantity = () => {
+let allQuantity = 0
+for (const item of productStore.cart[storeId.value]) {
+  allQuantity += item.quantity
+}
+return allQuantity
+}
+
 const adjustQuantity = (id, num) => {
   // 有產品
   const product = productStore.cart[storeId.value].filter(product => product.id === id)
-  console.log(product)
   productStore.cart[storeId.value].filter(product => product.id === id).map((product) => {
     if (product.quantity > 1  || num > 0){
       product.quantity += num
@@ -40,61 +44,49 @@ const adjustQuantity = (id, num) => {
       return product
     }
   })
-    // productStore.cart[storeId.value] = productStore.cart.map((product) => {
-    //   if (product.id === id){
-    //   if (product.quantity > 1 ||(product.quantity === 1 && num > 0 )){
-    //   return product.quantity += num
-    // }if (product.quantity === 1 && num < 0 ){
-    //   const newCart = productStore.cart.filter(product => id !== product.id)
-    //   productStore.setCart(newCart)
-    //   cart.value = newCart
-    //   }
-    //   return product
-    // }
-    // })
   }
-  const deleteProduct = (id) => {
-    const newProduct = productStore.cart[storeId.value].filter(product => product.id !== id )
-    productStore.cart[storeId.value] = newProduct
-    console.log(productStore.cart[storeId])
-    return productStore.cart
-  }
-  if (productStore.cart[storeId.value] === ''){
-    delete productStore.cart[storeId.value]
-    console.log(Object.keys(productStore.cart))
 
-    // productStore.cart[storeId].setCart(newProduct)
-    // const newCart = productStore.cart.filter(product => id !== product.id)
-    //   productStore.setCart(newCart)
-    //   cart.value = newCart
+  const deleteProduct = (id, temperature, sweetness, mealPreparation) => {
+    const newProduct = productStore.cart[storeId.value].filter(product =>
+      (product.id !== id) ||
+      (product.id === id && product.temperature !== temperature) ||
+      (product.id ===id && product.sweetness !== sweetness) ||
+      (product.id ===id && product.mealPreparation !== mealPreparation))
+
+    productStore.cart[storeId.value] = newProduct
+    return productStore.cart
   }
 </script>
 
 <template>
   <header>
-      <i class="fa-solid fa-chevron-left mx-2" @click="changePage(`/store/${storeId}`)"></i>
+      <i class="fa-solid fa-chevron-left mx-2" @click="changePage(`/cart`)"></i>
   </header>
   <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200">
-      <p class="my-2 text-black">全部 {{ cart[storeId].length }} 筆</p>
-      <div class="flex items-center shadow-md my-3 py-2 rounded-lg bg-white mx-2" v-for="(item, idx) in cart[storeId]" :key="idx" >
+      <p class="my-2 text-black">全部 {{ totalQuantity() }} 筆</p>
+      <div class="flex items-center shadow-md my-3 py-2 rounded-lg bg-white mx-2" v-for="(item, id) in cart[storeId]" :key="id">
         <img :src="item.image" alt="image" class="h-20 relative">
-        <div>
+        <div @click="changePage(`/store/${storeId}/product/${item.id}`)">
           <p class="font-bold text-xl text-black">{{ item.name }}</p>
           <p class="font-bold text-xl text-black">$ {{ item.price }}</p>
+        <template v-if="item.category !== '找鹹的' && item.category !== '找甜的' && item.category !== '炸物點心'">
           <span class="text-slate-400">{{ item.temperature }}</span>
           <span class="text-slate-400 ml-1">{{ item.sweetness }}</span>
+        </template>
+        <template v-if="item.category === '找鹹的' || item.category === '找甜的'">
+          <span class="text-slate-400">{{ item.mealPreparation }}</span>
+        </template>
         </div>
         <div class=" absolute right-12">
           <button class="rounded-l-md w-6 text-white  bg-brown" @click="adjustQuantity(item.id, -1)">-</button>
           <input type="text" class="w-10 text-center text-black" :value="item.quantity">
           <button class="rounded-r-md w-6 text-white bg-brown " @click="adjustQuantity(item.id, 1)">+</button>
         </div>
-        <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item.id)">
+        <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item.id, item.temperature, item.sweetness, item.mealPreparation )">
           <i class="fa-regular fa-trash-can  text-sm"></i>
         </div>
   </div>
-
 
   <div class="flex items-center shadow-md my-3 py-2 justify-between px-7 mx-2 rounded-lg bg-white">
       <p class="text-lg font-bold text-black">合計：$ {{ totalPrice }}</p>

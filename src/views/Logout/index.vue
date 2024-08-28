@@ -24,14 +24,9 @@ const goToEdit = () => {
 </script>
 
 <template>
-  <header v-if="isDarkTheme" class="text-white">
-    <div class="flex mx-2 text-white">
-      <p><i class="fa-solid fa-chevron-left"></i></p><p class="w-full text-center">帳戶設置</p>
-    </div>
-  </header>
-  <header v-else>
-    <div class="flex mx-2">
-      <p><i class="fa-solid fa-chevron-left"></i></p><p class="w-full text-center">帳戶設置</p>
+  <header>
+    <div class="text-center mx-2" :class="[{ darkMode : isDarkTheme }]">
+      <p>帳戶設置</p>
     </div>
   </header>
   <div v-if="isDarkTheme" class="flex px-5 w-full items-center bg-black text-white">

@@ -4,34 +4,42 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { computed } from 'vue';
 import { useProductStore } from '@/store/product';
-import { ClockCircleOutlined } from '@ant-design/icons-vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 
 const userStore = useUserStore()
 const productStore = useProductStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
+
 const cartAmount = computed(() => Object.keys(productStore.cart).length )
 
 const footerImage = ref([
   {
     key:'/',
     image: 'fa-house',
-    title: '首頁'
+    title: t('home')
+  },
+  {
+    key:'/search',
+    image: 'fa-magnifying-glass',
+    title: t('search')
   },
   {
     key:'/cart',
     image: 'fa-cart-shopping',
-    title: '購物車'
+    title: t('cart')
   },
   {
     key:'/store',
     image: 'fa-store',
-    title: '店家資訊'
+    title: t('store_info')
   },
   {
     key:'/login',
     image: 'fa-user',
-    title: '我的'
+    title: t('profile')
   }
 ])
 
@@ -54,7 +62,7 @@ const changePage = (url) => {
 
   <footer :class="['fixed bottom-0 w-full bg-white py-2', { darkMode: isDarkTheme }]">
     <ul class="flex w-full justify-center">
-      <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-7 cursor-pointer" @click="changePage(item.key)">
+      <li v-for="item in footerImage" :key="item" class="flex flex-col items-center px-5 cursor-pointer" @click="changePage(item.key)">
         <a-badge v-if="item.image ==='fa-cart-shopping'" :count="cartAmount" size="large" :class="[{ darkMode: isDarkTheme }]">
       <i :class="['fa-solid text-2xl', item.image] "></i>
       </a-badge>

@@ -18,7 +18,9 @@ const storeId = ref(Number(route.params.storeId))
 const changePage = (url) => {
   router.push(url)
 }
-
+console.log(storeId)
+// console.log(productStore.order[storeId.value][0].products)
+  delete productStore.cart[storeId.value]
 
 </script>
 
@@ -50,21 +52,23 @@ const changePage = (url) => {
     </div>
   <div class="bg-white text-black py-3 px-3">
       <p class="font-bold text-lg pb-2">餐點</p>
-  <div class="flex mt-3 items-center my-3 py-3 rounded-lg mx-2" v-for="item in productStore.cart[storeId]" :key="item">
-    <img :src="item.image" alt="image" class="h-24">
-    <div>
-      <p class="font-bold text-lg">{{ item.name }}</p>
-      <p class="font-bold text-lg">$ {{ item.price }}</p>
-      <span class="text-slate-400">{{ item.temperature }}</span>
-      <span class="text-slate-400 ml-2">{{ item.sweetness }}</span>
+  <div class="mt-3 my-3 py-3 rounded-lg mx-2" v-for="item in productStore.order[storeId]" :key="item">
+    <div v-for="product of item.products" :key="product" class="flex items-center mt-3">
+      <img :src="product.image" alt="image" class="h-24">
+      <div>
+        <p class="font-bold text-lg">{{ product.name }}</p>
+        <p class="font-bold text-lg">$ {{ product.price }}</p>
+        <span class="text-slate-400">{{ product.temperature }}</span>
+        <span class="text-slate-400 ml-2">{{ product.sweetness }}</span>
+      </div>
+      <div class=" translate-y-6 translate-x-12">
+      <p>x {{ product.quantity }}</p>
     </div>
-    <div class=" translate-y-6 translate-x-12">
-    <p>x {{ item.quantity }}</p>
     </div>
   </div>
 </div>
 
-  <div class="my-3 py-3 px-3 rounded-lg bg-white shadow-sm" v-for="item in order[storeId]" :key="item">
+  <div class="my-3 py-3 px-3 rounded-lg bg-white shadow-sm" v-for="item in productStore.order[storeId]" :key="item">
   <div class="my-3 py-1 px-3 rounded-lg bg-white text-black">
       <p class="font-bold text-lg pb-2">付款方式</p>
       <p>{{ item.payMethod }}</p>
@@ -76,9 +80,9 @@ const changePage = (url) => {
   </div>
   <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black" v-for="item in order[storeId]" :key="item">
       <p class="font-bold text-lg pb-2">總計 $ {{ item.totalPrice }}</p>
-      <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md">
-        <button class="h-10" @click="changePage('/')">繼續購物</button>
-      </div>
+        <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md">
+          <button class="h-10" @click="changePage('/')">繼續購物</button>
+        </div>
   </div>
   </div>
 </div>

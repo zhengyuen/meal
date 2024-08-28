@@ -1,21 +1,20 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { useUserStore } from '@/store/user';
 import { useRouter } from 'vue-router'
-import { useRoute } from 'vue-router'
 
-const route = useRoute()
-const {name, user, phone} = route.query
-const edit = reactive({
-  name,
-  user,
-  phone
-})
 const router = useRouter()
+
 const goPersonal = () => {
   router.push('/personal')
 }
 const useStore = useUserStore()
+const formData = computed(() => useStore.formData)
+const edit = reactive({
+  name: formData.name,
+  user: formData.user,
+  phone: formData.phone
+})
 
 const submit = () => {
   const toEdit = useStore.formData
@@ -44,20 +43,20 @@ const prePage = () => {
     <div>
       <div >
         <label for="">姓名</label>
-        <input v-model.trim="edit.name" type="text" class="border-2 border-gray rounded-lg mt-3 ml-2 pl-2 text-black" id="name" >
+        <input v-model.trim="formData.name" type="text" class="border-2 border-gray rounded-lg mt-3 ml-2 pl-2 text-black" id="name" >
       </div>
       <div>
         <label for="">帳號名 </label>
-        <input v-model.trim="edit.user" type="text" class="border-2 border-gray rounded-lg mt-3 ml-2 pl-2 text-black" id="username">
+        <input v-model.trim="formData.user" type="text" class="border-2 border-gray rounded-lg mt-3 ml-2 pl-2 text-black" id="username">
       </div>
       <div>
         <label for="">手機號碼</label>
-        <input v-model.trim="edit.phone" type="text" class="border-2 border-gray rounded-lg mt-3 ml-2 pl-2 text-black" id="phone">
+        <input v-model.trim="formData.phone" type="text" class="border-2 border-gray rounded-lg mt-3 ml-2 pl-2 text-black" id="phone">
       </div>
     </div>
   </form>
   <div class="text-center">
-    <button class="mt-5 bg-orange-400 rounded-full w-32 text-center disabled:bg-orange-200" @click="submit" :disabled="!edit.name || !edit.user || !edit.phone"  type="submit">確定</button>
+    <button class="mt-5 bg-orange-400 rounded-full w-32 text-center disabled:bg-orange-200" @click="submit" :disabled="!formData.name || !formData.user || !formData.phone"  type="submit">確定</button>
   </div>
 
 </template>

@@ -2,8 +2,12 @@
 import { useUserStore } from '@/store/user';
 import { computed, onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
 
 const router = useRouter()
+const { t, locale } = useI18n()
+
 
 const userStore = useUserStore()
 const formData = ref(userStore.formData)
@@ -11,6 +15,15 @@ const personal = ref(userStore.personal)
 const isDarkTheme = computed(() => (userStore.isDarkTheme))
 const changeTheme = () => {
   userStore.setIsDarkTheme(!isDarkTheme.value)
+}
+
+const languageList = {
+    zh: 'zh_TW',
+    en: 'en_US'
+}
+
+const changeLanguage = {
+
 }
 
 const goToEdit = () => {
@@ -65,6 +78,10 @@ onMounted(() => {
     <div class="flex mt-3 justify-between">
       <p class="font-bold">暗黑模式</p>
       <a-switch v-model:checked="isDarkTheme" @change="changeTheme" />
+    </div>
+    <div class="flex mt-3 justify-between">
+      <p class="font-bold">英文模式</p>
+      <a-switch v-model:checked="isEng" @change="changeLanguage" />
     </div>
   </div>
   <div class="text-center">

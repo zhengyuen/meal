@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
 import { useProductStore } from '@/store/product';
 import ProductCard from '@/components/productCard/index.vue'
+import { message } from 'ant-design-vue';
+
 
 const activeKey = ref('1');
 const router = useRouter()
@@ -17,12 +19,27 @@ const productStore = useProductStore()
 const stores = ref(productStore.stores || [])
 const store = computed(() => stores.value.find(store => store.id === storeId.value))
 const productData = computed(() => store.value.products)
+// const allQuantity = () => {
+//   const hasProduct = productStore.cart[storeId.value]
+//   if (hasProduct) {
+//     let totalQuantity = 0
+//     for (const item of productStore.cart[storeId.value]) {
+//       totalQuantity += item.quantity
+//     }
+//     return totalQuantity
+//   } else {
+//     return 0
+//   }
+// }
 
+const note = () => {
+  message.success('請加入商品')
+}
 </script>
 
 <template>
   <header>
-  <div class="pl-2"><i class="fa-solid fa-chevron-left" @click="changePage('/store')"></i></div>
+  <!-- <div class="pl-2"><i class="fa-solid fa-chevron-left" @click="changePage('/store')"></i></div> -->
   <div class="flex px-5 items-center shadow-sm">
       <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-24 object-cover relative">
   <template v-for="(items, idx) in stores" :key="idx" >
@@ -129,8 +146,18 @@ const productData = computed(() => store.value.products)
       />
   </template>
     </a-tab-pane>
-
   </a-tabs>
+  <!-- <div class="flex items-center bottom-24 right-8 fixed">
+    <div class=" rounded-full text-white bg-orange-700 shadow-md w-12 h-12 text-center" >
+      <a-badge v-if="productStore.cart[storeId]" :count="allQuantity()" @click="changePage(`/carts/${storeId}`)">
+        <i class="fa-solid fa-cart-plus translate-y-3 text-xl text-white"></i>
+      </a-badge>
+      <a-badge v-if="!productStore.cart[storeId]" count="0" showZero @click="note">
+        <i class="fa-solid fa-cart-plus translate-y-3 text-xl text-white"></i>
+      </a-badge>
+      </div>
+      <p class="text-orange-700 ml-2 text-sm">購物車</p>
+    </div> -->
 </template>
 
 <style scope></style>

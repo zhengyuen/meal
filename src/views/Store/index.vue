@@ -19,6 +19,8 @@ const changePage = (url) => {
 }
 const searchValue = ref('')
 const handleSearch = (event) => {
+  console.log(searchValue)
+  stores.value = productStore.stores.filter(store => store.name.includes(searchValue.value))
   if (event.keyCode === 13) {
   stores.value = productStore.stores.filter(store => store.name.includes(searchValue.value))
     }
@@ -30,7 +32,6 @@ const area = ['台北','新北','新竹','桃園','苗栗','台中','彰化','�
 const handleChange = (city) => {
   stores.value = productStore.stores.filter(store => store.category.includes(city))
 }
-console.log(searchValue)
 </script>
 
 <template>
@@ -47,8 +48,9 @@ console.log(searchValue)
       <a-select-option v-for="item in area" :key="item"></a-select-option>
     </a-select>
     </a-space>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" @keydown="handleSearch" id="search">
-    <label for="searchValue" class="cursor-pointer"  id="search"><i class="fa-solid fa-magnifying-glass ml-2 text-white" @click="handleSearch"></i></label>
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" id="search" @keydown="handleSearch">
+    <button class="cursor-pointer" @click="handleSearch">
+      <i class="fa-solid fa-magnifying-glass ml-2 text-white"></i></button>
 </div>
 </header>
 <div class="mt-14">

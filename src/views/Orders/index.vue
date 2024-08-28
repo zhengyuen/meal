@@ -50,16 +50,18 @@ console.log(order.value[storeId.value][0].store)
   </div>
   <div class="bg-white text-black py-3 px-3">
       <p class="font-bold text-lg pb-2">餐點</p>
-  <div class="flex mt-3 items-center my-3 py-3 rounded-lg mx-2" v-for="item in productStore.cart[storeId]" :key="item">
-    <img :src="item.image" alt="image" class="h-24">
-    <div>
-      <p class="font-bold text-lg">{{ item.name }}</p>
-      <p class="font-bold text-lg">$ {{ item.price }}</p>
-      <span class="text-slate-400">{{ item.temperature }}</span>
-      <span class="text-slate-400 ml-2">{{ item.sweetness }}</span>
-    </div>
-    <div class=" translate-y-6 translate-x-12">
-    <p>x {{ item.quantity }}</p>
+  <div class="my-3 py-3 rounded-lg mx-2" v-for="item in productStore.order[storeId]" :key="item">
+    <div v-for="product of item.products" :key="product" class="flex mt-3 items-center">
+      <img :src="product.image" alt="image" class="h-24">
+      <div>
+        <p class="font-bold text-lg">{{ product.name }}</p>
+        <p class="font-bold text-lg">$ {{ product.price }}</p>
+        <span class="text-slate-400">{{ product.temperature }}</span>
+        <span class="text-slate-400 ml-2">{{ product.sweetness }}</span>
+      </div>
+      <div class=" translate-y-6 translate-x-12">
+      <p>x {{ product.quantity }}</p>
+      </div>
     </div>
   </div>
 </div>
@@ -76,8 +78,13 @@ console.log(order.value[storeId.value][0].store)
   </div>
   <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black" v-for="(item, id) in order[storeId]" :key="id">
       <p class="font-bold text-lg pb-2">總計 $ {{ item.totalPrice }}</p>
-      <div class="font-bold bg-yellow-700 text-white w-1/4 text-center rounded-lg text-md">
-        <button class="h-10" disabled>已結帳</button>
+      <div class="flex">
+        <div class="font-bold bg-white text-black border-2 border-blue-200 border-solid w-28 text-center rounded-lg text-md">
+          <button class="h-10" disabled>已結帳</button>
+        </div>
+        <!-- <div class="font-bold bg-brown text-white w-28 text-center rounded-lg text-md ml-2" >
+          <button class="h-10" @click="changePage(`/carts/${storeId}`)">重新購買</button>
+        </div> -->
       </div>
   </div>
   </div>

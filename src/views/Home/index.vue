@@ -22,11 +22,7 @@ const userStore = useUserStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
 
 const productStore = useProductStore()
-const stores = ref(productStore.stores || [])
-const store = computed(() => {
-  stores.value = productStore.stores.filter(store => store.value.products)
-})
-console.log(store);
+const stores = computed(() => productStore.stores || [])
 
 const carouseImage = reactive([
   'https://kaoku.tw/shinemood/source/KITKAT%E8%81%AF%E5%90%8D-FB_%E5%B7%A5%E4%BD%9C%E5%8D%80%E5%9F%9F%2010727.jpg',
@@ -59,10 +55,10 @@ const menuImage = ref([
 
 <template>
 <div class="text-center px-8 fixed z-10 w-full bg-white" :class="[{ darkMode: isDarkTheme }]">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" :class="[{ 'text-black':isDarkTheme }]"></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
+  <!-- <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" :class="[{ 'text-black':isDarkTheme }]"></i>
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch"> -->
 </div>
-  <a-carousel class="w-full mt-6" autoplay>
+  <a-carousel class="w-full mt-2" autoplay>
     <div v-for="(item, idx) in carouseImage" :key="idx">
 			<img class="w-full h-[200px] object-cover" :src="item"/>
 		</div>
@@ -88,4 +84,3 @@ const menuImage = ref([
   </template>
 
 </template>
-<style scope></style>
