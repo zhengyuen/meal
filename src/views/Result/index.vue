@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useProductStore } from '@/store/product';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 
 const userStore = useUserStore()
@@ -26,7 +29,7 @@ console.log(storeId)
 
 <template>
   <header class="text-center">
-    訂單明細
+    {{ t('order_details') }}
   </header>
 <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200" :class="{'!bg-black text-white px-2': userStore.isDarkTheme }">
@@ -39,7 +42,7 @@ console.log(storeId)
     </div>
     <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black"
     :class="{'!bg-black text-white border-2 border-white border-solid': userStore.isDarkTheme }">
-        <p class="font-bold text-lg pb-2">訂購人資料</p>
+        <p class="font-bold text-lg pb-2">{{ t('order_info') }}</p>
         <p class="font-bold">
         </p>
         <div class="font-bold pl-3">
@@ -53,7 +56,7 @@ console.log(storeId)
     </div>
   <div class="bg-white text-black py-3 px-3"
   :class="{'!bg-black text-white border-2 border-white border-solid': userStore.isDarkTheme }">
-      <p class="font-bold text-lg pb-2">餐點</p>
+      <p class="font-bold text-lg pb-2">{{ t('meal') }}</p>
   <div class="mt-3 my-3 py-3 rounded-lg mx-2" v-for="item in productStore.order[storeId]" :key="item">
     <div v-for="product of item.products" :key="product" class="flex items-center mt-3">
       <img :src="product.image" alt="image" class="h-24" :class="{ 'rounded-full mx-2 h-20 w-20 object-cover': userStore.isDarkTheme }">
@@ -74,20 +77,20 @@ console.log(storeId)
   :class="{'!bg-black text-white border-2 border-white border-solid': userStore.isDarkTheme }">
   <div class="my-3 py-1 px-3 rounded-lg bg-white text-black"
   :class="{'!bg-black text-white': userStore.isDarkTheme }">
-      <p class="font-bold text-lg pb-2">付款方式</p>
+      <p class="font-bold text-lg pb-2">{{ t('pay_method') }}</p>
       <p>{{ item.payMethod }}</p>
   </div>
   <div class="my-3 py-1 px-3 rounded-lg bg-white text-black"
   :class="{'!bg-black text-white': userStore.isDarkTheme }">
-      <p class="font-bold text-lg pb-2">取貨方式</p>
+      <p class="font-bold text-lg pb-2">{{ t('pickup_method') }}</p>
       <p>{{ item.getMethod }}</p>
   </div>
   </div>
   <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black" v-for="item in order[storeId]" :key="item"
   :class="{'!bg-black text-white border-2 border-white border-solid': userStore.isDarkTheme }">
-      <p class="font-bold text-lg pb-2">總計 $ {{ item.totalPrice }}</p>
+      <p class="font-bold text-lg pb-2">{{ t('total') }} $ {{ item.totalPrice }}</p>
         <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md">
-          <button class="h-10" @click="changePage('/')">繼續購物</button>
+          <button class="h-10" @click="changePage('/')">{{ t('continue_shop') }}</button>
         </div>
   </div>
   </div>

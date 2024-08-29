@@ -51,7 +51,7 @@ const handleChange = (city) => {
       <a-select-option v-for="item in area" :key="item"></a-select-option>
     </a-select>
     </a-space>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2 text-black" placeholder="搜尋門市" v-model="searchValue" id="search" @keydown="handleSearch">
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2 text-black" :placeholder="$t('search_stores')" v-model="searchValue" id="search" @keydown="handleSearch">
     <button class="cursor-pointer" @click="handleSearch">
       <i class="fa-solid fa-magnifying-glass ml-2 text-white"></i></button>
 </div>

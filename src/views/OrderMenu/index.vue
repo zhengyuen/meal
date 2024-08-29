@@ -3,13 +3,14 @@ import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useProductStore } from '@/store/product';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 
 const userStore = useUserStore()
-const getInform = userStore.formData
 const productStore = useProductStore()
 const order = computed(() => productStore.order)
-const cart = computed(() => productStore.cart)
 const router = useRouter()
 const changePage = (url) => {
   router.push(url)
@@ -20,12 +21,10 @@ const changePage = (url) => {
 
 <template>
   <header class="text-center bg-white fixed w-full ">
-    <!-- <i class="fa-solid fa-chevron-left left-3 absolute" @click="changePage('/order')"></i>
-    我的訂單 -->
   </header>
 <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200" :class="{'!bg-black text-white px-2': userStore.isDarkTheme }">
-      <p class="text-2xl text-black" :class="{ 'text-white':userStore.isDarkTheme }">我的訂單</p>
+      <p class="text-2xl text-black" :class="{ 'text-white':userStore.isDarkTheme }">{{ t('my_order') }}</p>
       <p class="text-black" :class="{ 'text-white':userStore.isDarkTheme }">全部 {{ Object.keys(order).length }} 筆</p>
       <div class="shadow-md my-3 py-3 px-5 mx-3 rounded-lg bg-white text-2xl text-bold flex items-center" v-for="(item, idx) in order" :key="idx"
       :class="{'!bg-black text-white border-2 border-white border-solid': userStore.isDarkTheme }"

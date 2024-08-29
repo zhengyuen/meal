@@ -5,7 +5,7 @@
 ![進入訂單](/src/assets/images/orderenter.png)
 * 有輪播圖效果
 * 點擊店家圖示可到各店家菜單內容
-* 點擊圖示可以查看訂單
+* 點擊訂單圖示可以查看訂單
 
 ### 訂單
 ![訂單 Menu](/src/assets/images/orderMenu.png)

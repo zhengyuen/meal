@@ -59,7 +59,7 @@ console.log(Object.keys(productStore.cart))
             </div>
         </div>
             <div class="text-center my-3">
-              <button class="bg-brown text-white w-full rounded-lg h-10" @click="changePage(`/carts/${item[0].storeId}`)">檢視購物車</button>
+              <button class="bg-brown text-white w-full rounded-lg h-10" @click="changePage(`/carts/${item[0].storeId}`)">{{ t('view_cart') }}</button>
             </div>
           </div>
   </div>

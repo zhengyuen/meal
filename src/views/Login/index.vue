@@ -60,8 +60,8 @@ onMounted (()=> {
   <div class="text-center mt-20">
     <p class="font-bold text-2xl mb-5">{{ t('member_login') }}</p>
     <form action="" @submit="submit">
-      <input v-model.trim="inputData.username" type="username" placeholder="請輸入手機號碼" class="w-80 h-10 rounded-full bg-slate-200 pl-6 text-black" id="username">
-      <input v-model.trim="inputData.password" type="password" placeholder="請輸入密碼" class="w-80 h-10 rounded-full bg-slate-200 mt-3 pl-6 text-black" id="password">
+      <input v-model.trim="inputData.username" type="username" :placeholder="$t('input_cellphone')" class="w-80 h-10 rounded-full bg-slate-200 pl-6 text-black" id="username">
+      <input v-model.trim="inputData.password" type="password" :placeholder="$t('input_password')" class="w-80 h-10 rounded-full bg-slate-200 mt-3 pl-6 text-black" id="password">
       <button class="w-80 h-10 bg-orange-400 rounded-full mt-7 disabled:bg-orange-200" type="submit" :disabled="!inputData.username || !inputData.password">{{ t('login') }}</button>
     </form>
   </div>

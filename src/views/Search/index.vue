@@ -64,11 +64,11 @@ const handleSearch = (event) => {
 <template>
 <div class="text-center px-8 fixed z-10 w-full" :class="[{ 'bg-black text-black':isDarkTheme }]">
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12 text-black"></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" :placeholder="$t('search_all')" v-model="searchValue" @keydown="handleSearch">
 </div>
 <p class="text-xl font-bold mt-10 pl-3">#{{ t('search_result') }}</p>
 <a-tabs v-model:activeKey="activeKey" class="px-1" @change="handelChange" :class="[{ 'text-white': isDarkTheme }]">
-    <a-tab-pane key="stores" tab="門市" v-model="searchValue">
+    <a-tab-pane key="stores" :tab="$t('store')" v-model="searchValue">
     <template v-if="searchData.length">
     <home-card v-for="item in searchData " :key="item"
     :name="item.name"
@@ -78,10 +78,10 @@ const handleSearch = (event) => {
     />
     </template>
     <template v-else>
-    <p class="ml-5 text-center text-lg">沒有您要搜尋的結果</p>
+    <p class="ml-5 text-center text-lg">{{ t('no_result') }}</p>
     </template>
     </a-tab-pane>
-    <a-tab-pane key="products" tab="商品" v-model="searchValue">
+    <a-tab-pane key="products" :tab="$t('product')" v-model="searchValue">
       <template v-if ="searchData.length">
   <div v-for="(item, idx) in searchData"  :key="idx" class="my-2">
     <div class="flex" >
@@ -106,7 +106,7 @@ const handleSearch = (event) => {
     </div>
 </template>
 <template v-else>
-  <p class="ml-5 text-center text-lg">沒有您要搜尋的結果</p>
+  <p class="ml-5 text-center text-lg">{{ t('no_result') }}</p>
 </template>
     </a-tab-pane>
   </a-tabs>

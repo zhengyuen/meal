@@ -5,6 +5,9 @@ import { useRoute } from 'vue-router';
 import { useUserStore } from '@/store/user';
 import { useProductStore } from '@/store/product';
 import { message } from 'ant-design-vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 
 
@@ -72,7 +75,7 @@ const changeName = () => {
 <template>
   <header class="text-center">
     <i class="fa-solid fa-chevron-left left-3 absolute" @click="changePage('/cart')"></i>
-    訂單詳情
+    {{ t('order') }}
   </header>
 <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200" :class="{'!bg-black text-white px-2': isDarkTheme }">
@@ -83,22 +86,22 @@ const changeName = () => {
     </div>
     <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black"
     :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
-      <p class="font-bold text-lg pb-2">訂購人資料</p>
+      <p class="font-bold text-lg pb-2">{{ t('order_info') }}</p>
       <div class="text-right" @click="changeName">
         <i class="fa-solid fa-pen-to-square"></i>
       </div>
       <div class="font-bold pl-3">
         <p>
-        姓名： {{buyerInform.name}}
+        {{ t('name') }}: {{buyerInform.name}}
         </p>
         <p>
-        電話： {{buyerInform.phone}}
+        {{ t('cellphone') }}: {{buyerInform.phone}}
         </p>
       </div>
   </div>
 <div class="bg-white py-3 px-3 text-black"
 :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
-      <p class="font-bold text-lg pb-2">餐點</p>
+      <p class="font-bold text-lg pb-2">{{ t('total') }}</p>
   <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2 text-black" v-for="item in productStore.cart[storeId]" :key="item"
   :class="{'!bg-black text-white': isDarkTheme }">
     <img :src="item.image" alt="image" class="h-20" :class="{ 'rounded-full mx-2 h-20 w-20 object-cover': isDarkTheme }">
@@ -113,10 +116,9 @@ const changeName = () => {
     </div>
   </div>
 </div>
-
   <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black" 
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
-      <p class="font-bold text-lg pb-2">付款方式</p>
+      <p class="font-bold text-lg pb-2">{{ t('pay_method') }}</p>
       <a-button v-for="items in payMethod" class="font-bold"
       :key="items"
       :value="items"
@@ -127,7 +129,7 @@ const changeName = () => {
   </div>
   <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black"
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
-      <p class="font-bold text-lg pb-2">取貨方式</p>
+      <p class="font-bold text-lg pb-2">{{ t('pickup_method') }}</p>
       <a-button v-for="items in getMethod" class="font-bold"
       :key="items"
       :focus="outline-0"
@@ -139,9 +141,9 @@ const changeName = () => {
 
   <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black"
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
-      <p class="font-bold text-lg pb-2">總計 $ {{ totalPrice }}</p>
+      <p class="font-bold text-lg pb-2">{{ t('total') }} $ {{ totalPrice }}</p>
       <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md" @click="addOrder(storeId)">
-        <button class="h-10">提交訂單</button>
+        <button class="h-10">{{ t('submit') }}</button>
       </div>
   </div>
   </div>

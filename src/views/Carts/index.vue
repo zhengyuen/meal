@@ -4,7 +4,10 @@ import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
 import { useProductStore } from '@/store/product';
 import { useUserStore } from '@/store/user';
+import { useI18n } from 'vue-i18n';
 
+
+const { t } = useI18n()
 const productStore = useProductStore()
 
 const cart = computed(() => productStore.cart || [])
@@ -97,7 +100,7 @@ const adjustQuantity = (id, num) => {
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
       <p class="text-lg font-bold text-black" :class="{ 'text-white': isDarkTheme }">合計：$ {{ totalPrice }}</p>
       <div class="bg-brown text-white rounded-lg text-center w-1/4 text-md h-10 ">
-      <button @click="changePage(`/order/storeId/${storeId}`)" class="pt-2 ">去買單</button>
+      <button @click="changePage(`/order/storeId/${storeId}`)" class="pt-2 ">{{ t('go_pay') }}</button>
     </div>
   </div>
   </div>
