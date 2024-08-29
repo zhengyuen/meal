@@ -1,4 +1,4 @@
-## 手機 App 購物車系統
+## 手機 App 點餐系統
 
 ### 首頁
 ![首頁](/src/assets/images/home.png)
@@ -30,7 +30,7 @@
 * 點擊店家可以進到菜單頁面
 
 
-### 菜單頁面
+#### 菜單頁面
 ![商品分類](/src/assets/images/products2.png)
 * header部分可以看到店家評分和營業資訊
 * 點擊不同分類字體會變成咖啡色
