@@ -6,7 +6,7 @@ const language = localStorage.getItem('language')
 
 export default createI18n({
   legacy: false,
-  locale: 'zh_TW',
+  locale: language || 'zh_TW',
   fallbackLocale: 'zh_TW',
   messages: {
     'zh_TW': zh,

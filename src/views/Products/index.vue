@@ -39,7 +39,6 @@ const note = () => {
 
 <template>
   <header>
-  <!-- <div class="pl-2"><i class="fa-solid fa-chevron-left" @click="changePage('/store')"></i></div> -->
   <div class="flex px-5 items-center shadow-sm">
       <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-24 object-cover relative">
   <template v-for="(items, idx) in stores" :key="idx" >

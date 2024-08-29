@@ -5,6 +5,9 @@ import { useUserStore } from '@/store/user';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProductStore } from '@/store/product';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 const router = useRouter()
 
@@ -32,23 +35,23 @@ const carouseImage = reactive([
 const menuImage = ref([
   {
     image:'fa-magnifying-glass',
-    title: '找附近'
+    title: t('near')
   },
   {
     image:'fa-receipt',
-    title: '訂單'
+    title: t('order')
   },
   {
     image:'fa-ticket-simple',
-    title: '優惠券'
+    title: t('coupon')
   },
   {
     image:'fa-money-check',
-    title: '兌換券'
+    title: t('voucher')
   },
   {
     image:'fa-note-sticky',
-    title: '曾點過'
+    title: t('history_order')
   }
 ])
 </script>

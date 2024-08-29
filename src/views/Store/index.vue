@@ -6,6 +6,9 @@ import { useProductStore } from '@/store/product';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 const router = useRouter()
 const route = useRouter()
@@ -37,7 +40,7 @@ const handleChange = (city) => {
 <template>
 <header>
 <div class="flex justify-center items-center bg-brown mb-2 py-1 w-full fixed">
-  <p class="bg-brown rounded-md w-16 text-white text-center">找地區</p>
+  <p class="bg-brown rounded-md w-16 text-white text-center">{{ t('search_local') }}</p>
   <a-space>
     <a-select
       ref="select"
@@ -48,7 +51,7 @@ const handleChange = (city) => {
       <a-select-option v-for="item in area" :key="item"></a-select-option>
     </a-select>
     </a-space>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2" placeholder="搜尋門市" v-model="searchValue" id="search" @keydown="handleSearch">
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full  pl-5 ml-2 text-black" placeholder="搜尋門市" v-model="searchValue" id="search" @keydown="handleSearch">
     <button class="cursor-pointer" @click="handleSearch">
       <i class="fa-solid fa-magnifying-glass ml-2 text-white"></i></button>
 </div>

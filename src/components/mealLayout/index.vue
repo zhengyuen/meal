@@ -15,7 +15,7 @@ const isDarkTheme = computed(() => userStore.isDarkTheme)
 
 const cartAmount = computed(() => Object.keys(productStore.cart).length )
 
-const footerImage = ref([
+const footerImage = computed(() => [
   {
     key:'/',
     image: 'fa-house',

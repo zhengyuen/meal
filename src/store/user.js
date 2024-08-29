@@ -5,7 +5,6 @@ export const useUserStore = defineStore(
   'user',
   () => {
     const token = ref('')
-    const isEng = ref('')
     const setToken = (newToken) => {
       token.value = newToken
     }
@@ -28,7 +27,6 @@ export const useUserStore = defineStore(
 
     return {
       token,
-      isEng,
       isDarkTheme,
       formData,
       personal,

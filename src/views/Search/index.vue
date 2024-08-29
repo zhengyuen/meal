@@ -5,6 +5,9 @@ import { useProductStore } from '@/store/product';
 import { useUserStore } from '@/store/user';
 import { computed, ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 const userStore = useUserStore()
 const isDarkTheme = computed(() => userStore.isDarkTheme)
@@ -24,7 +27,6 @@ return allProduct
 }
 )
 const product = computed(() => products.value.filter(item => item.name.includes(searchValue.value)) )
-console.log(product)
 const changePage = (url) => {
   router.push(url)
 }
@@ -57,7 +59,6 @@ const handleSearch = (event) => {
   }
 }
 
-console.log(searchData)
 </script>
 
 <template>
@@ -65,7 +66,7 @@ console.log(searchData)
   <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12 text-black"></i>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch">
 </div>
-<p class="text-xl font-bold mt-10 pl-3">#搜尋結果</p>
+<p class="text-xl font-bold mt-10 pl-3">#{{ t('search_result') }}</p>
 <a-tabs v-model:activeKey="activeKey" class="px-1" @change="handelChange" :class="[{ 'text-white': isDarkTheme }]">
     <a-tab-pane key="stores" tab="門市" v-model="searchValue">
     <template v-if="searchData.length">
@@ -88,8 +89,8 @@ console.log(searchData)
       <div class="ml-2">
         <p class="font-bold text-xl">{{ item.storeName }}</p>
         <div class="flex mb-2">
-          <span class="bg-slate-200 rounded-sm">{{ item.business_hours }}</span>
-          <div class=" bg-slate-200 ml-3 rounded-md px-2">
+          <span class="bg-slate-200 rounded-sm text-black px-2">{{ item.business_hours }}</span>
+          <div class=" bg-slate-200 text-black ml-3 rounded-md px-2">
           <i class="fa-solid fa-star text-yellow-400 mr-1"></i><span>{{ item.score }}</span>
           </div>
         </div>
@@ -114,4 +115,11 @@ console.log(searchData)
 
 </template>
 
-<style scope></style>
+<style scope>
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  @apply text-orange-800;
+}
+.ant-tabs-ink-bar {
+  @apply !bg-orange-800;
+}
+</style>

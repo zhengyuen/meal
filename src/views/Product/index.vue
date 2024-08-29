@@ -107,6 +107,7 @@ message.success('已加入購物車')
     <h1 class="font-bold">溫度</h1>
   <div class="text-center mb-5" >
   <a-button v-for="item in temperature"
+  :colorPrimaryHover="none"
   :key="item"
   :value="item"
   @click="drinkStatus.temperature = item"
@@ -159,4 +160,8 @@ message.success('已加入購物車')
 </div>
 </template>
 
-<style scope></style>
+<style scope>
+.ant-btn:hover {
+  @apply !border-black !text-black
+}
+</style>

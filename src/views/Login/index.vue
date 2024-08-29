@@ -4,6 +4,9 @@ import { userApi } from '@/api/user'
 import { useUserStore } from '@/store/user';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n()
 
 
 const userStore = useUserStore();
@@ -51,15 +54,15 @@ onMounted (()=> {
   <header>
     <div class="flex mt-3 justify-between mx-2">
       <i class="fa-solid fa-chevron-left" @click="changePage('/')"></i>
-      <p>幫助</p>
+      <p>{{ t('help') }}</p>
     </div>
   </header>
   <div class="text-center mt-20">
-    <p class="font-bold text-2xl mb-5">會員登入</p>
+    <p class="font-bold text-2xl mb-5">{{ t('member_login') }}</p>
     <form action="" @submit="submit">
       <input v-model.trim="inputData.username" type="username" placeholder="請輸入手機號碼" class="w-80 h-10 rounded-full bg-slate-200 pl-6 text-black" id="username">
       <input v-model.trim="inputData.password" type="password" placeholder="請輸入密碼" class="w-80 h-10 rounded-full bg-slate-200 mt-3 pl-6 text-black" id="password">
-      <button class="w-80 h-10 bg-orange-400 rounded-full mt-7" type="submit" :disabled="!inputData.username || !inputData.password">登入</button>
+      <button class="w-80 h-10 bg-orange-400 rounded-full mt-7 disabled:bg-orange-200" type="submit" :disabled="!inputData.username || !inputData.password">{{ t('login') }}</button>
     </form>
   </div>
 </mealLayout>

@@ -5,8 +5,8 @@ import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 
-const router = useRouter()
 const { t, locale } = useI18n()
+const router = useRouter()
 
 
 const userStore = useUserStore()
@@ -18,12 +18,14 @@ const changeTheme = () => {
 }
 
 const languageList = {
-    zh: 'zh_TW',
-    en: 'en_US'
+  zh: 'zh_TW',
+  en: 'en_US'
 }
-
-const changeLanguage = {
-
+const isEng = computed(() => locale.value === languageList.en)
+const changeLanguage = () => {
+  const lang = locale.value === languageList.zh ? languageList.en : languageList.zh
+  locale.value = lang
+  localStorage.setItem('language', lang)
 }
 
 const goToEdit = () => {
@@ -51,7 +53,7 @@ onMounted(() => {
     <header>
     <div class="flex mt-3 mx-2">
       <i class="fa-solid fa-chevron-left cursor-pointer" @click="prePage"></i>
-      <p class="w-full text-center">個人檔案</p>
+      <p class="w-full text-center">{{ t('profile') }}</p>
     </div>
   </header>
   <div class="flex items-center mt-2 px-5">
@@ -64,23 +66,23 @@ onMounted(() => {
     <i class="fa-solid fa-pen-to-square"></i>
     </div>
     <div class="flex mt-3 justify-between">
-      <p class="font-bold">名稱</p>
+      <p class="font-bold">{{ t('name') }}</p>
       <p class="text-gray">{{ formData.name }}</p>
     </div>
     <div class="flex mt-3 justify-between">
-      <p class="font-bold">帳號名</p>
+      <p class="font-bold">{{ t('username') }}</p>
       <p class="text-gray">{{ formData.user }}</p>
     </div>
     <div class="flex mt-3 justify-between">
-      <p class="font-bold">手機號碼</p>
+      <p class="font-bold">{{ t('cellphone') }}</p>
       <p class="text-gray">{{ formData.phone }}</p>
     </div>
     <div class="flex mt-3 justify-between">
-      <p class="font-bold">暗黑模式</p>
+      <p class="font-bold">{{ t('darkModel') }}</p>
       <a-switch v-model:checked="isDarkTheme" @change="changeTheme" />
     </div>
     <div class="flex mt-3 justify-between">
-      <p class="font-bold">英文模式</p>
+      <p class="font-bold">{{ t('english') }}</p>
       <a-switch v-model:checked="isEng" @change="changeLanguage" />
     </div>
   </div>
