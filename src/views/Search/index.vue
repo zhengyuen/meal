@@ -23,7 +23,6 @@ for(const item of productStore.stores){
   }
 }
 return allProduct
-
 }
 )
 const product = computed(() => products.value.filter(item => item.name.includes(searchValue.value)) )
@@ -105,14 +104,11 @@ const handleSearch = (event) => {
       <i class="fa-solid fa-circle-chevron-right text-lg ml-2"></i>
     </div>
 </template>
-<template v-else>
-  <p class="ml-5 text-center text-lg">{{ t('no_result') }}</p>
-</template>
+  <template v-else>
+    <p class="ml-5 text-center text-lg">{{ t('no_result') }}</p>
+  </template>
     </a-tab-pane>
   </a-tabs>
-
-
-
 </template>
 
 <style scope>

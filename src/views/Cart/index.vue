@@ -58,10 +58,10 @@ console.log(Object.keys(productStore.cart))
               <i class="fa-regular fa-trash-can  text-sm"></i>
             </div>
         </div>
-            <div class="text-center my-3">
-              <button class="bg-brown text-white w-full rounded-lg h-10" @click="changePage(`/carts/${item[0].storeId}`)">{{ t('view_cart') }}</button>
-            </div>
-          </div>
+        <div class="text-center my-3">
+            <button class="bg-brown text-white w-full rounded-lg h-10" @click="changePage(`/carts/${item[0].storeId}`)">{{ t('view_cart') }}</button>
+        </div>
+      </div>
   </div>
   </div>
 </template>

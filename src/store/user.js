@@ -4,6 +4,16 @@ import { ref, reactive } from 'vue'
 export const useUserStore = defineStore(
   'user',
   () => {
+    const loading = ref(false);
+    const setLoading = (bool) => {
+      if (bool) {
+        loading.value = bool
+      } else {
+        setTimeout(() => {
+          loading.value = bool;
+        },2000);
+      }
+    }
     const token = ref('')
     const setToken = (newToken) => {
       token.value = newToken
@@ -33,7 +43,9 @@ export const useUserStore = defineStore(
       setToken,
       setIsDarkTheme,
       setFormData,
-      setPersonal
+      setPersonal,
+      loading,
+      setLoading
     }
   },
   {

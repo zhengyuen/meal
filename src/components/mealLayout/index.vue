@@ -5,9 +5,11 @@ import { useUserStore } from '@/store/user';
 import { computed } from 'vue';
 import { useProductStore } from '@/store/product';
 import { useI18n } from 'vue-i18n';
+import AdModal from '../adModal/index.vue'
+
 
 const { t } = useI18n()
-
+const isShowAd = ref(JSON.parse(localStorage.getItem('hasSeenAd')))
 
 const userStore = useUserStore()
 const productStore = useProductStore()
@@ -71,6 +73,7 @@ const changePage = (url) => {
       </li>
     </ul>
   </footer>
+  <ad-modal :isShow="!isShowAd"/>
   </div>
 
 </template>
