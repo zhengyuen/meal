@@ -1,5 +1,9 @@
 ## 手機 App 點餐系統
 
+### 廣告彈窗 & 載入畫面
+![廣告&載入](src/assets/images/loading.png)
+* 剛進到首頁時有廣告彈窗和載入畫面效果
+
 ### 首頁
 ![首頁](/src/assets/images/home.png)
 ![進入訂單](/src/assets/images/orderenter.png)
