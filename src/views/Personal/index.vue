@@ -11,7 +11,6 @@ const router = useRouter()
 
 const userStore = useUserStore()
 const formData = ref(userStore.formData)
-const personal = ref(userStore.personal)
 const isDarkTheme = computed(() => (userStore.isDarkTheme))
 const changeTheme = () => {
   userStore.setIsDarkTheme(!isDarkTheme.value)

@@ -45,10 +45,10 @@ console.log(order.value[storeId.value][0].store)
       </p>
       <div class="font-bold pl-3">
         <p>
-        姓名： {{getInform.name}}
+        {{ t('name') }}： {{getInform.name}}
         </p>
         <p>
-        電話： {{getInform.phone}}
+        {{ t('cellphone') }}： {{getInform.phone}}
         </p>
       </div>
   </div>

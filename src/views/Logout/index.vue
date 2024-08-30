@@ -35,7 +35,7 @@ const goToEdit = () => {
   <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-14 h-14 rounded-full">
   <div class="ml-3 mt-2 w-full">
     <span>{{ formData.name }}</span><br>
-    <small>帳號名:{{ formData.user }}</small>
+    <small>{{ t('username') }}: {{ formData.user }}</small>
   </div>
   <div class="flex flex-col items-center cursor-pointer" @click="goToEdit">
     <i class="fa-solid fa-gear text-2xl px-2 "></i><span>編輯</span>
