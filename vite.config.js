@@ -5,6 +5,7 @@ import tailwindcss from 'tailwindcss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/meal-public/',
   plugins: [vue()],
   resolve: {
       alias: { // 2. 新增別名
