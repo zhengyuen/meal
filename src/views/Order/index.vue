@@ -79,12 +79,12 @@ const changeName = () => {
   </header>
 <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200" :class="{'!bg-black text-white px-2': isDarkTheme }">
-    <div class="shadow-md my-3 py-3 px-5 mt-3 rounded-lg bg-white text-blue-500 text-bold"
+    <div class="shadow-md my-3 py-3 px-5 mt-3 rounded-lg bg-white text-blue-500 text-bold RwdModel"
     :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
       <p class="font-bold text-lg pb-2">{{ store.name }}</p>
       <i class="fa-solid fa-phone mr-3"></i><span>07-722-6777</span>
     </div>
-    <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black"
+    <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black RwdModel"
     :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
       <p class="font-bold text-lg pb-2">{{ t('order_info') }}</p>
       <div class="text-right" @click="changeName">
@@ -99,9 +99,9 @@ const changeName = () => {
         </p>
       </div>
   </div>
-<div class="bg-white py-3 px-3 text-black"
+<div class="bg-white py-3 px-3 text-black RwdModel"
 :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
-      <p class="font-bold text-lg pb-2">{{ t('total') }}</p>
+      <p class="font-bold text-lg pb-2">{{ t('product') }}</p>
   <div class="flex items-center my-3 py-3 rounded-lg bg-white mx-2 text-black" v-for="item in productStore.cart[storeId]" :key="item"
   :class="{'!bg-black text-white': isDarkTheme }">
     <img :src="item.image" alt="image" class="h-20" :class="{ 'rounded-full mx-2 h-20 w-20 object-cover': isDarkTheme }">
@@ -116,7 +116,7 @@ const changeName = () => {
     </div>
   </div>
 </div>
-  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black" 
+  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black RwdModel"
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
       <p class="font-bold text-lg pb-2">{{ t('pay_method') }}</p>
       <a-button v-for="items in payMethod" class="font-bold"
@@ -127,7 +127,7 @@ const changeName = () => {
       :class="['mr-2 last:mr-0', { 'border-2 border-brown border-solid':items === order.payMethod }]"
       >{{ items }}</a-button>
   </div>
-  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black"
+  <div class="shadow-md my-3 py-3 px-3 rounded-lg bg-white text-black RwdModel"
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
       <p class="font-bold text-lg pb-2">{{ t('pickup_method') }}</p>
       <a-button v-for="items in getMethod" class="font-bold"
@@ -139,7 +139,7 @@ const changeName = () => {
       >{{ items }}</a-button>
   </div>
 
-  <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black"
+  <div class="flex justify-between items-center shadow-md my-3 py-4 px-3 rounded-lg bg-white text-black RwdModel"
   :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }">
       <p class="font-bold text-lg pb-2">{{ t('total') }} $ {{ totalPrice }}</p>
       <div class="font-bold bg-brown text-white w-1/4 text-center rounded-lg text-md" @click="addOrder(storeId)">
@@ -150,4 +150,11 @@ const changeName = () => {
 </div>
 </template>
 
-<style scope></style>
+<style scope>
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: 10px auto
+  }
+}
+</style>

@@ -57,7 +57,7 @@ onMounted (()=> {
       <p>{{ t('help') }}</p>
     </div>
   </header>
-  <div class="text-center mt-20">
+  <div class="text-center mt-20" id="RwdModel">
     <p class="font-bold text-2xl mb-5">{{ t('member_login') }}</p>
     <form action="" @submit="submit">
       <input v-model.trim="inputData.username" type="username" :placeholder="$t('input_cellphone')" class="w-80 h-10 rounded-full bg-slate-200 pl-6 text-black" id="username">
@@ -70,4 +70,12 @@ onMounted (()=> {
 
 </template>
 
-<style scope></style>
+<style scope>
+
+@media screen and (min-width: 576px) {
+#RwdModel {
+    width: 50%;
+    margin: auto
+  }
+}
+</style>

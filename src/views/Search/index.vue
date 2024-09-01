@@ -66,7 +66,7 @@ const handleSearch = (event) => {
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" :placeholder="$t('search_all')" v-model="searchValue" @keydown="handleSearch">
 </div>
 <p class="text-xl font-bold mt-10 pl-3">#{{ t('search_result') }}</p>
-<a-tabs v-model:activeKey="activeKey" class="px-1" @change="handelChange" :class="[{ 'text-white': isDarkTheme }]">
+<a-tabs v-model:activeKey="activeKey" class="px-1 RwdModel" @change="handelChange" :class="[{ 'text-white': isDarkTheme }]">
     <a-tab-pane key="stores" :tab="$t('store')" v-model="searchValue">
     <template v-if="searchData.length">
     <home-card v-for="item in searchData " :key="item"
@@ -117,5 +117,12 @@ const handleSearch = (event) => {
 }
 .ant-tabs-ink-bar {
   @apply !bg-orange-800;
+}
+
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
 }
 </style>

@@ -59,6 +59,7 @@ const handleChange = (city) => {
 <div class="mt-14">
   <template v-if="stores.length">
   <home-card v-for ="(item) in stores"
+  class="RwdModel"
   :key="item"
   :name="item.name"
   :time="item.business_hours"
@@ -73,4 +74,11 @@ const handleChange = (city) => {
 
 </template>
 
-<style scope></style>
+<style scope>
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
+}
+</style>

@@ -61,7 +61,7 @@ const menuImage = ref([
   <!-- <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12" :class="[{ 'text-black':isDarkTheme }]"></i>
   <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" placeholder="搜尋門市或商品" v-model="searchValue" @keydown="handleSearch"> -->
 </div>
-  <a-carousel class="w-full mt-2" autoplay>
+  <a-carousel class="w-full mt-2 RwdModel" autoplay>
     <div v-for="(item, idx) in carouseImage" :key="idx">
 			<img class="w-full h-[200px] object-cover" :src="item"/>
 		</div>
@@ -78,6 +78,7 @@ const menuImage = ref([
 
 <template  v-for="(item,id) in stores" :key="id">
   <home-card
+  class="RwdModel"
   v-if="id < 3"
   :name="item.name"
   :time="item.business_hours"
@@ -87,3 +88,11 @@ const menuImage = ref([
   </template>
 
 </template>
+<style scope>
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
+}
+</style>

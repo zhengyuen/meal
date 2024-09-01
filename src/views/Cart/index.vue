@@ -45,7 +45,7 @@ console.log(Object.keys(productStore.cart))
   <div class="flex flex-col min-h-screen">
     <div class="flex-1 bg-slate-200 text-black" :class="{'!bg-black text-white': isDarkTheme }">
       <p class="font-bold text-xl mx-2 mt-2 text-black" :class="{ 'text-white': isDarkTheme }">{{ t('cart') }}</p>
-      <div class="items-center shadow-md my-4 py-2 px-3 rounded-lg bg-white mx-3"
+      <div class="items-center shadow-md my-4 py-2 px-3 rounded-lg bg-white mx-3 RwdModel"
       :class="{'!bg-black text-white border-2 border-white border-solid': isDarkTheme }" v-for="(item) in cartVal" :key="item">
         <div class="flex items-center">
           <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-20 relative">
@@ -54,8 +54,8 @@ console.log(Object.keys(productStore.cart))
               <p class="font-bold text-xl text-black" :class="{ 'text-white': isDarkTheme }"> {{ item[0].storeName }}</p>
               <p class="text-black" :class="{ 'text-white': isDarkTheme }">共 {{ item.length}} 項</p>
             </div>
-            <div class="cursor-pointer absolute  right-6" @click="deleteProduct(item[0].storeId)">
-              <i class="fa-regular fa-trash-can  text-sm"></i>
+            <div class="cursor-pointer absolute right-6 deleteRwd" @click="deleteProduct(item[0].storeId)">
+              <i class="fa-regular fa-trash-can text-sm"></i>
             </div>
         </div>
         <div class="text-center my-3">
@@ -66,4 +66,14 @@ console.log(Object.keys(productStore.cart))
   </div>
 </template>
 
-<style scope></style>
+<style scope>
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
+.deleteRwd {
+    width: 30%;
+  }
+}
+</style>

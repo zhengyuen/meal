@@ -26,7 +26,7 @@ const changePage = (url) => {
     <div class="flex-1 bg-slate-200" :class="{'!bg-black text-white px-2': userStore.isDarkTheme }">
       <p class="text-2xl text-black" :class="{ 'text-white':userStore.isDarkTheme }">{{ t('my_order') }}</p>
       <p class="text-black" :class="{ 'text-white':userStore.isDarkTheme }">全部 {{ Object.keys(order).length }} 筆</p>
-      <div class="shadow-md my-3 py-3 px-5 mx-3 rounded-lg bg-white text-2xl text-bold flex items-center" v-for="(item, idx) in order" :key="idx"
+      <div class="shadow-md my-3 py-3 px-5 mx-3 rounded-lg bg-white text-2xl text-bold flex items-center RwdModel" v-for="(item, idx) in order" :key="idx"
       :class="{'!bg-black text-white border-2 border-white border-solid': userStore.isDarkTheme }"
       @click="changePage(`/orders/${item[0].storeId}`)">
         <div>
@@ -44,4 +44,11 @@ const changePage = (url) => {
   </div>
 </template>
 
-<style scope></style>
+<style scope>
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
+}
+</style>

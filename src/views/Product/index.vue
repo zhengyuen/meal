@@ -102,7 +102,7 @@ message.success('已加入購物車')
     <img :src="product.image" alt="image" class="h-1/2 mx-auto">
   </div>
 
-<div class="mb-5 px-3">
+<div class="mb-5 px-3 RwdModel">
   <template v-if="product.category !== '找鹹的' && product.category !== '找甜的' && product.category !== '炸物點心'">
     <h1 class="font-bold">溫度</h1>
   <div class="text-center mb-5" >
@@ -129,7 +129,7 @@ message.success('已加入購物車')
   <input type="text" class="border-2 border-gray rounded-md w-full px-3 mt-2 h-8 mb-6"> -->
 </div>
 <template v-if="product.category === '找鹹的' || product.category === '找甜的'">
-  <div class="mb-5 px-3">
+  <div class="mb-5 px-3 RwdModel">
     <h1 class="font-bold">備餐方式</h1>
     <div class="text-center mb-5">
     <a-button v-for="item in mealPreparation"
@@ -142,11 +142,11 @@ message.success('已加入購物車')
   </div>
 </template>
 <template v-if="product.category === '炸物點心'">
-  <h1 class="font-bold mb-3 px-3">此商品不需調整比例</h1>
+  <h1 class="font-bold mb-3 px-3 RwdModel">此商品不需調整比例</h1>
 </template>
 
 <hr>
-<div class="px-2" >
+<div class="px-2 RwdModel">
   <h1 class="my-5">總金額：{{ amount*product.price }} 元</h1>
   <div class="w-[112px] my-5 bg-lightGray text-black">
   <button class="rounded-l-md w-6" @click="minus">-</button>
@@ -163,5 +163,11 @@ message.success('已加入購物車')
 <style scope>
 .ant-btn:hover {
   @apply !border-black !text-black
+}
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
 }
 </style>

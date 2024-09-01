@@ -39,7 +39,7 @@ const note = () => {
 
 <template>
   <header>
-  <div class="flex px-5 items-center shadow-sm">
+  <div class="flex px-5 items-center shadow-sm RwdModel">
       <img src="https://life.ntpu.edu.tw/upload/2022092711003130rlm1.png" alt="image" class="h-24 object-cover relative">
   <template v-for="(items, idx) in stores" :key="idx" >
     <div class="ml-4" v-if="idx === storeId-1">
@@ -54,7 +54,7 @@ const note = () => {
   <div class="fixed right-0 translate-y-2 z-10 bg-white w-10 text-center">
     <!-- <i class="fa-solid fa-magnifying-glass"></i> -->
   </div>
-  <a-tabs v-model:activeKey="activeKey" type="card" class="static bg-white">
+  <a-tabs v-model:activeKey="activeKey" type="card" class="static bg-white RwdModel">
     <a-tab-pane key="1" tab="小木屋家推薦">
       <h1 class="font-bold text-brown" >小木屋家推薦</h1>
       <template v-for="(item, id) in productData" :key="id" >
@@ -146,17 +146,13 @@ const note = () => {
   </template>
     </a-tab-pane>
   </a-tabs>
-  <!-- <div class="flex items-center bottom-24 right-8 fixed">
-    <div class=" rounded-full text-white bg-orange-700 shadow-md w-12 h-12 text-center" >
-      <a-badge v-if="productStore.cart[storeId]" :count="allQuantity()" @click="changePage(`/carts/${storeId}`)">
-        <i class="fa-solid fa-cart-plus translate-y-3 text-xl text-white"></i>
-      </a-badge>
-      <a-badge v-if="!productStore.cart[storeId]" count="0" showZero @click="note">
-        <i class="fa-solid fa-cart-plus translate-y-3 text-xl text-white"></i>
-      </a-badge>
-      </div>
-      <p class="text-orange-700 ml-2 text-sm">購物車</p>
-    </div> -->
 </template>
 
-<style scope></style>
+<style scope>
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 50%;
+    margin: auto
+  }
+}
+</style>
