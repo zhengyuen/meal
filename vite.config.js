@@ -5,7 +5,7 @@ import tailwindcss from 'tailwindcss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base:'/meal-public/',
+  // base:'/meal-public/',
   plugins: [vue()],
   resolve: {
     alias: {
