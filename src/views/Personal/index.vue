@@ -60,7 +60,7 @@ onMounted(() => {
     <img src="https://d3l76hx23vw40a.cloudfront.net/recipe/yb17-013.jpg" alt="image" class="w-16 h-16 rounded-full mx-auto">
     </div>
   </div>
-  <div class="px-6 mt-3">
+  <div class="px-6 mt-3 RwdModel">
     <div class="w-full text-right cursor-pointer" @click="goToEdit">
     <i class="fa-solid fa-pen-to-square"></i>
     </div>
@@ -92,5 +92,12 @@ onMounted(() => {
 <style scope>
 .ant-switch.ant-switch-checked .ant-switch-inner {
   @apply !bg-orange-400;
+}
+@media screen and (min-width: 576px) {
+.RwdModel {
+    width: 100%;
+    margin: auto;
+    padding: 2px 30%;
+  }
 }
 </style>

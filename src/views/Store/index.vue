@@ -38,8 +38,7 @@ const handleChange = (city) => {
 </script>
 
 <template>
-<header>
-<div class="flex justify-center items-center bg-brown mb-2 py-1 w-full fixed">
+<div class="flex justify-center items-center bg-brown mb-2 py-1 w-full fixed RwdSearch">
   <p class="bg-brown rounded-md w-16 text-white text-center">{{ t('search_local') }}</p>
   <a-space>
     <a-select
@@ -55,7 +54,6 @@ const handleChange = (city) => {
     <button class="cursor-pointer" @click="handleSearch">
       <i class="fa-solid fa-magnifying-glass ml-2 text-white"></i></button>
 </div>
-</header>
 <div class="mt-14">
   <template v-if="stores.length">
   <home-card v-for ="(item) in stores"
@@ -80,5 +78,10 @@ const handleChange = (city) => {
     width: 50%;
     margin: auto
   }
+.RwdSearch {
+  margin: auto;
+  padding: 2px 30%;
+  width: 100%;
+}
 }
 </style>

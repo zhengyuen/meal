@@ -61,11 +61,11 @@ const handleSearch = (event) => {
 </script>
 
 <template>
-<div class="text-center px-8 fixed z-10 w-full" :class="[{ 'bg-black text-black':isDarkTheme }]">
-  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12 text-black"></i>
-  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8" :placeholder="$t('search_all')" v-model="searchValue" @keydown="handleSearch">
+<div class="text-center px-8 fixed z-10 w-full RwdSearch" :class="[{ 'bg-black text-black':isDarkTheme }]">
+  <i class="fa-solid fa-magnifying-glass absolute top-1/2 -translate-y-1/2 left-12 text-black RwdSearchImage"></i>
+  <input type="text" class="py-1 mb-1 border-2 border-gray border-solid rounded-full w-full pl-8 " :placeholder="$t('search_all')" v-model="searchValue" @keydown="handleSearch">
 </div>
-<p class="text-xl font-bold mt-10 pl-3">#{{ t('search_result') }}</p>
+<p class="text-xl font-bold mt-10 pl-3 RwdSearchText">#{{ t('search_result') }}</p>
 <a-tabs v-model:activeKey="activeKey" class="px-1 RwdModel" @change="handelChange" :class="[{ 'text-white': isDarkTheme }]">
     <a-tab-pane key="stores" :tab="$t('store')" v-model="searchValue">
     <template v-if="searchData.length">
@@ -122,7 +122,19 @@ const handleSearch = (event) => {
 @media screen and (min-width: 576px) {
 .RwdModel {
     width: 50%;
-    margin: auto
+    margin: 5px auto;
+    text-align: center
   }
+.RwdSearch {
+  margin: auto;
+  padding: 2px 25%;
+  width: 100%;
+}
+.RwdSearchImage {
+  left: 26%;
+}
+.RwdSearchText{
+  text-align: center;
+}
 }
 </style>
