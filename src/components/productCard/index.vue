@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, normalizeProps } from 'vue';
+import { normalizeProps } from 'vue';
 defineProps({
   name:{
     type: String,

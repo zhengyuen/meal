@@ -32,8 +32,8 @@ const submit = async(e) => {
 	try {
 		const { code, data } = await userApi.login(inputData.username, inputData.password)
 		if (code === 200) {
-			const { token } = data
-			userStore.setToken(token)
+			const { accessToken } = data
+			userStore.setToken(accessToken)
 			message.success('登入成功')
       goToHome()
 		}
@@ -46,6 +46,7 @@ onMounted (()=> {
 		goToLogout()
 	}
 })
+console.log(token)
 </script>
 
 <template>

@@ -56,7 +56,7 @@ const changePage = (url) => {
 <template>
   <div class="flex flex-col min-h-screen">
     <header :class="['py-5 text-center fixed w-full top-0 z-10 bg-white', { darkMode: isDarkTheme }]">
-      <img src="https://u.fmyeah.com/i15s/66d86783d6ae8.jpg" alt=" " class="h-14 inline-block">
+      <img src="/public/images/logo.png" alt=" " class="h-14 inline-block">
     </header>
   <div class="flex-1 pt-24 pb-16">
     <slot />
